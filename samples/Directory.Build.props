@@ -1,0 +1,14 @@
+<Project>
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory)..\, Directory.Build.props))\Directory.Build.props" />
+
+  <PropertyGroup>
+    <!-- tye doesn't work with artifact directory. -->
+    <OutDirName>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)\bin\'))</OutDirName>
+    <OutputPath>$(OutDirName)$(Configuration)\</OutputPath>
+    <BaseIntermediateOutputPath>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)\obj\'))</BaseIntermediateOutputPath>
+    <IntemediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntemediateOutputPath>
+
+    <!-- Used for P2Ps in our samples. The tests know how to set this value so that references work. -->
+    <TyeLibrariesPath>$(MSBuildThisFileDirectory)\..\src\</TyeLibrariesPath>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,102 @@
+﻿@page "/logs/{ServiceName}"
+@inject IJSRuntime JS
+@inject Application application
+@implements IDisposable
+
+<style>
+    #logview {
+        overflow-y: scroll;
+        position: absolute;
+        height: 70vh;
+        width: 75%;
+        color: white;
+        background-color: black;
+        padding: 10px;
+    }
+</style>
+
+<h3>Logs for @ServiceName</h3>
+
+@if (ApplicationLogs == null)
+{
+    <span>Unknown service @ServiceName</span>
+}
+else
+{
+    <div style="padding:10px">
+        <button type="button" class="btn btn-primary" @onclick=ClearLogs>Clear Log</button>
+        <button type="button" class="btn btn-primary @(@_autoScroll ? "active" : "")" 
+                @onclick=ToggleAutoScroll>
+            Follow Logs [@(_autoScroll ? "ON" : "OFF")]
+        </button>
+    </div>
+    <div id="logview" class="autoscroll" @onmousedown=DisableAutoScroll>
+        @foreach (var log in ApplicationLogs)
+        {
+            <div>@log.Text</div>
+        }
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string ServiceName { get; set; } = default!;
+
+    public List<(string Text, int Id)>? ApplicationLogs { get; set; } 
+
+    private IDisposable? _subscription;
+
+    private bool _autoScroll = true;
+
+    protected override void OnInitialized()
+    {
+        // TODO: handle this returning false
+        if (application.Services.TryGetValue(ServiceName, out var service))
+        {
+            ApplicationLogs = service.CachedLogs.Select((item, index) => (item, index)).ToList();
+            var count = ApplicationLogs.Count;
+            StateHasChanged();
+
+            _subscription = service.Logs.Subscribe(log =>
+            {
+                count++;
+                InvokeAsync(() =>
+                {
+                    ApplicationLogs.Add((log, count));
+                    StateHasChanged();
+                });
+            });
+        }
+
+        base.OnInitialized();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_autoScroll)
+        {
+            await ScrollToBottom();
+        }
+
+        await base.OnAfterRenderAsync(firstRender);
+    }    
+
+    private void ClearLogs()
+    {
+        ApplicationLogs?.Clear();
+    }
+    
+    private void ToggleAutoScroll() => _autoScroll = !_autoScroll;
+
+    private void DisableAutoScroll() => _autoScroll = false;
+
+    void IDisposable.Dispose()
+    {
+        _subscription?.Dispose();
+    }
+
+    ValueTask ScrollToBottom()
+    {
+        return JS.InvokeVoidAsync("scrollToBottom", "logview");
+    }
+}

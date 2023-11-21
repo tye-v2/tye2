@@ -1,0 +1,68 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dapr-test-project
+  annotations:
+    dapr.io/enabled: 'true'
+    dapr.io/app-id: 'dapr-test-project'
+    dapr.io/app-port: '80'
+    dapr.io/config: 'tracing'
+    dapr.io/log-level: 'debug'
+  labels:
+    app.kubernetes.io/name: 'dapr-test-project'
+    app.kubernetes.io/part-of: 'dapr_test_application'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: dapr-test-project
+  template:
+    metadata:
+      annotations:
+        dapr.io/enabled: 'true'
+        dapr.io/app-id: 'dapr-test-project'
+        dapr.io/app-port: '80'
+        dapr.io/config: 'tracing'
+        dapr.io/log-level: 'debug'
+      labels:
+        app.kubernetes.io/name: 'dapr-test-project'
+        app.kubernetes.io/part-of: 'dapr_test_application'
+    spec:
+      containers:
+      - name: dapr-test-project
+        image: dapr-test-project:1.0.0
+        imagePullPolicy: Always
+        env:
+        - name: DOTNET_LOGGING__CONSOLE__DISABLECOLORS
+          value: 'true'
+        - name: ASPNETCORE_URLS
+          value: 'http://*'
+        - name: PORT
+          value: '80'
+        - name: SERVICE__DAPR-TEST-PROJECT__PROTOCOL
+          value: 'http'
+        - name: SERVICE__DAPR-TEST-PROJECT__PORT
+          value: '80'
+        - name: SERVICE__DAPR-TEST-PROJECT__HOST
+          value: 'dapr-test-project'
+        ports:
+        - containerPort: 80
+...
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: dapr-test-project
+  labels:
+    app.kubernetes.io/name: 'dapr-test-project'
+    app.kubernetes.io/part-of: 'dapr_test_application'
+spec:
+  selector:
+    app.kubernetes.io/name: dapr-test-project
+  type: ClusterIP
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 80
+...
