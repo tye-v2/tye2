@@ -320,7 +320,7 @@ namespace Microsoft.Tye.Hosting
                 new DockerImagePuller(logger),
                 new FuncFinder(logger),
                 new ReplicaMonitor(logger),
-                new DockerRunner(logger, replicaRegistry),
+                new DockerRunner(logger, replicaRegistry, DockerRunnerOptions.FromHostOptions(options)),
                 new ProcessRunner(logger, replicaRegistry, ProcessRunnerOptions.FromHostOptions(options))
             };
 
@@ -386,7 +386,7 @@ namespace Microsoft.Tye.Hosting
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, "Error launching dashboard");
+                _logger?.LogError(ex, "Error launching dashboard.");
             }
         }
 

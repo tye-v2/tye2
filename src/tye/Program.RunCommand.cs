@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -76,6 +76,15 @@ namespace Microsoft.Tye
                     Description = $"Watches a specific dotnet service for code changes. Specify {ProcessRunnerOptions.AllServices} to watch for all dotnet services.",
                     Required = false
                 },
+                new Option("--no-start")
+                {
+                    Argument = new Argument<string[]>("service")
+                    {
+                        Arity = ArgumentArity.ZeroOrMore,
+                    },
+                    Description = "Skip automatic start for specific service(s). Specify \"*\" to skip start for all services.",
+                    Required = false
+                },
                 StandardOptions.Framework,
                 StandardOptions.Tags,
                 StandardOptions.Verbosity,
@@ -116,6 +125,7 @@ namespace Microsoft.Tye
                 };
                 options.Debug.AddRange(args.Debug);
                 options.Watch.AddRange(args.Watch);
+                options.NoStart.AddRange(args.NoStart);
 
                 await application.ProcessExtensionsAsync(options, output, ExtensionContext.OperationKind.LocalRun);
 
@@ -155,6 +165,8 @@ namespace Microsoft.Tye
             public bool Dashboard { get; set; }
 
             public string[] Debug { get; set; } = Array.Empty<string>();
+
+            public string[] NoStart { get; set; } = Array.Empty<string>();
 
             public string Dtrace { get; set; } = default!;
 

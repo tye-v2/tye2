@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,6 +17,8 @@ namespace Microsoft.Tye.Hosting
         public string[]? ServicesToDebug { get; set; }
         public bool DebugAllServices { get; set; }
         public bool ShouldDebugService (string serviceName) => DebugMode && (DebugAllServices || ServicesToDebug!.Contains(serviceName, StringComparer.OrdinalIgnoreCase));
+        public bool ManualStartServices { get; set; }
+        public string[]? ServicesNotToStart { get; set; }
 
         public bool WatchMode { get; set; }
         public string[]? ServicesToWatch { get; set; }
@@ -36,6 +38,8 @@ namespace Microsoft.Tye.Hosting
                 WatchMode = options.Watch.Any(),
                 ServicesToWatch = options.Watch.ToArray(),
                 WatchAllServices = options.Watch?.Contains(AllServices, StringComparer.OrdinalIgnoreCase) ?? false,
+                ManualStartServices = options.NoStart?.Contains(AllServices, StringComparer.OrdinalIgnoreCase) ?? false,
+                ServicesNotToStart = options.NoStart?.ToArray(),
             };
         }
     }

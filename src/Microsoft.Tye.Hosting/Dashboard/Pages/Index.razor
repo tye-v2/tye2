@@ -1,4 +1,4 @@
-﻿@page "/"
+@page "/"
 @inject Application application
 @implements IDisposable
 
@@ -96,7 +96,20 @@
                 {
                     <td>@service.Replicas.Count/@service.Description.Replicas</td>
                     <td>@service.Restarts</td>
-                    <td><NavLink href="@logsPath">Logs</NavLink> | <NavLink href="@servicePath">Metrics</NavLink></td>
+                    <td>
+                        <NavLink href="@logsPath">Logs</NavLink> | <NavLink href="@servicePath">Metrics</NavLink> |&nbsp;
+                        @if (CanStartStop(service))
+                        {
+                            if (service.Replicas.Count == 0)
+                            {
+                                <a href="#" @onclick="async () => await StartServiceAsync(service)">Start</a>
+                            }
+                            else
+                            {
+                                <a href="#" @onclick="async () => await StopServiceAsync(service)">Stop</a>
+                            }
+                        }
+                    </td>
                 }
             </tr>
         }
@@ -104,7 +117,7 @@
 </table>
 
 @code {
-
+    static readonly ServiceType[] stopables = { ServiceType.Container, ServiceType.Executable, ServiceType.Project, ServiceType.Function };
     private List<IDisposable> _subscriptions = new List<IDisposable>();
 
     string GetServiceStateClass(ServiceState serviceState) => serviceState switch
@@ -116,6 +129,11 @@
         ServiceState.Stopped => "badge-light",
         _ => "badge-dark"
     };
+
+    bool CanStartStop(Service? service)
+    {
+        return service != null && stopables.Contains(service.ServiceType);
+    }
 
     string GetUrl(ServiceBinding b)
     {
@@ -134,6 +152,31 @@
     {
         InvokeAsync(() => StateHasChanged());
     }
+
+    private async Task StartServiceAsync(Service service)
+    {
+        if (service.ServiceType == ServiceType.Container)
+        {
+            await DockerRunner.RestartContainerAsync(service);
+        }
+        else
+        {
+            await ProcessRunner.RestartService(service);
+        }
+    }
+
+    private async Task StopServiceAsync(Service service)
+    {
+        if (service.ServiceType == ServiceType.Container)
+        {
+            await DockerRunner.StopContainerAsync(service);
+        }
+        else
+        {
+            await ProcessRunner.KillProcessAsync(service);
+        }
+    }
+
 
     void IDisposable.Dispose()
     {

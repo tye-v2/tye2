@@ -89,8 +89,8 @@ namespace Microsoft.Tye.Hosting.Model
         {
             get
             {
-                var replicaStates = Replicas.Values.Select(r => r.State).ToList();
-                var replicaCount = replicaStates.Count;
+                var replicaStates = Replicas.Values.Select(r => r.State);
+                int replicaCount = replicaStates.Count();
 
 
                 if (replicaCount == 0)
@@ -104,15 +104,13 @@ namespace Microsoft.Tye.Hosting.Model
 
                 if (replicaCount == 1)
                 {
-                    var replicaState = replicaStates.Single();
+                    ReplicaState? replicaState = replicaStates.Single();
 
-                    switch (replicaState)
-                    {
-                        case ReplicaState.Removed:
-                            return ServiceState.Failed;
-                        case ReplicaState.Stopped:
-                            return ServiceState.Stopped;
-                    }
+                    if (replicaState == ReplicaState.Removed)
+                        return ServiceState.Failed;
+
+                    if (replicaState == ReplicaState.Stopped)
+                        return ServiceState.Stopped;
                 }
                 else
                 {
