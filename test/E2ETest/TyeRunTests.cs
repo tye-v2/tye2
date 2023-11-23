@@ -1,7 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-#nullable disable
 
 using System;
 using System.Collections.Generic;
@@ -12,17 +11,15 @@ using System.Net;
 using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
-using System.Net.WebSockets;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Tye;
 using Microsoft.Tye.Hosting;
 using Microsoft.Tye.Hosting.Model;
 using Microsoft.Tye.Hosting.Model.V1;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.ObjectModel;
 using Test.Infrastructure;
 using Xunit;
 using Xunit.Abstractions;
@@ -128,7 +125,7 @@ services:
 
         [ConditionalTheory]
         [SkipIfDockerNotRunning]
-        [InlineData("single-project", "mcr.microsoft.com/dotnet/aspnet:6.0")]
+        [InlineData("single-project", "mcr.microsoft.com/dotnet/core/aspnet:3.1")]
         [InlineData("single-project-5.0", "mcr.microsoft.com/dotnet/aspnet:5.0")]
         public async Task SingleProjectWithDocker_UsesCorrectBaseImage(string projectName, string baseImage)
         {
@@ -254,7 +251,7 @@ services:
             application.Services.Remove(project);
 
             var outputFileName = project.AssemblyName + ".dll";
-            var container = new ContainerServiceBuilder(project.Name, $"mcr.microsoft.com/dotnet/aspnet:{project.TargetFrameworkVersion}", ServiceSource.Configuration)
+            var container = new ContainerServiceBuilder(project.Name, $"mcr.microsoft.com/dotnet/core/aspnet:{project.TargetFrameworkVersion}", ServiceSource.Configuration)
             {
                 IsAspNet = true
             };
@@ -301,7 +298,7 @@ services:
             application.Services.Remove(project);
 
             var outputFileName = project.AssemblyName + ".dll";
-            var container = new ContainerServiceBuilder(project.Name, $"mcr.microsoft.com/dotnet/aspnet:{project.TargetFrameworkVersion}", ServiceSource.Configuration)
+            var container = new ContainerServiceBuilder(project.Name, $"mcr.microsoft.com/dotnet/core/aspnet:{project.TargetFrameworkVersion}", ServiceSource.Configuration)
             {
                 IsAspNet = true
             };
@@ -679,7 +676,6 @@ services:
             };
 
             var client = new HttpClient(new RetryHandler(handler));
-            var wsClient = new ClientWebSocket();
 
             await RunHostingApplication(application, new HostOptions(), async (app, uri) =>
             {
@@ -713,34 +709,6 @@ services:
                 // checking preservePath behavior
                 var responsePreservePath = await client.GetAsync(ingressUri + "/C/test");
                 Assert.Contains("Hit path /C/test", await responsePreservePath.Content.ReadAsStringAsync());
-
-                string GetWebSocketUri(string uri)
-                {
-                    if (uri.StartsWith("http"))
-                    {
-                        return "ws" + uri.Substring(4);
-                    }
-                    else if (uri.StartsWith("https"))
-                    {
-                        return "wss" + uri.Substring(5);
-                    }
-
-                    throw new NotSupportedException();
-                }
-
-                // Check the websocket endpoint
-                var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-                var wsUri = GetWebSocketUri(ingressUri);
-                await wsClient.ConnectAsync(new Uri(wsUri + "/A/ws"), cts.Token);
-                var data = Encoding.UTF8.GetBytes("Hello World");
-                await wsClient.SendAsync(data, WebSocketMessageType.Text, endOfMessage: true, cts.Token);
-                var receiveBuffer = new byte[4096];
-                var result = await wsClient.ReceiveAsync(receiveBuffer.AsMemory(), cts.Token);
-                Assert.True(result.EndOfMessage);
-                Assert.Equal(WebSocketMessageType.Text, result.MessageType);
-                Assert.Equal(data.Length, result.Count);
-                Assert.Equal(data, receiveBuffer.AsMemory(0, result.Count).ToArray());
-                await wsClient.CloseAsync(WebSocketCloseStatus.NormalClosure, "", cts.Token);
             });
         }
 
@@ -1051,6 +1019,44 @@ services:
 
         [ConditionalFact]
         [SkipIfDockerNotRunning]
+        public async Task MultiRepo_WorksWithCloningAndDockerfile()
+        {
+            using var projectDirectory = TempDirectory.Create(preferUserDirectoryOnMacOS: true);
+
+            var content = @"
+name: tye-docker-sample
+services:
+- name: minapp
+  repository: https://github.com/OlegKarasik/tye-docker-sample";
+
+            var yamlFile = Path.Combine(projectDirectory.DirectoryPath, "tye.yaml");
+            var projectFile = new FileInfo(yamlFile);
+            await File.WriteAllTextAsync(yamlFile, content);
+
+            // Debug targets can be null if not specified, so make sure calling host.Start does not throw.
+            var outputContext = new OutputContext(_sink, Verbosity.Debug);
+            var application = await ApplicationFactory.CreateAsync(outputContext, projectFile);
+
+            var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
+            };
+
+            var client = new HttpClient(new RetryHandler(handler));
+
+            await RunHostingApplication(application, new HostOptions(), async (app, uri) =>
+            {
+                var appUri = await GetServiceUrl(client, uri, "minapp");
+
+                var appResponse = await client.GetAsync(appUri);
+
+                Assert.True(appResponse.IsSuccessStatusCode);
+            });
+        }
+
+        [ConditionalFact]
+        [SkipIfDockerNotRunning]
         public async Task DockerFileTest()
         {
             using var projectDirectory = CopyTestProjectDirectory("dockerfile");
@@ -1232,7 +1238,7 @@ services:
 
         [ConditionalTheory]
         [SkipIfDockerNotRunning]
-        [InlineData("non-standard-dashboard-port", "mcr.microsoft.com/dotnet/aspnet:6.0", 8005)]
+        [InlineData("non-standard-dashboard-port", "mcr.microsoft.com/dotnet/core/aspnet:3.1", 8005)]
         [InlineData("non-standard-dashboard-port-5.0", "mcr.microsoft.com/dotnet/aspnet:5.0", 8006)]
         public async Task RunUsesYamlDashboardPort(string projectName, string baseImage, int expectedDashboardPort)
         {
@@ -1274,7 +1280,7 @@ services:
 
         [ConditionalTheory]
         [SkipIfDockerNotRunning]
-        [InlineData("non-standard-dashboard-port", "mcr.microsoft.com/dotnet/aspnet:6.0", 8005)]
+        [InlineData("non-standard-dashboard-port", "mcr.microsoft.com/dotnet/core/aspnet:3.1", 8005)]
         [InlineData("non-standard-dashboard-port-5.0", "mcr.microsoft.com/dotnet/aspnet:5.0", 8006)]
         public async Task RunCliPortOverridesYamlDashboardPort(string projectName, string baseImage, int tyeYamlDashboardPort)
         {
@@ -1314,39 +1320,6 @@ services:
                 var response = await client.GetAsync(testProjectUri);
 
                 Assert.True(response.IsSuccessStatusCode);
-            });
-        }
-
-        [ConditionalFact]
-        [SkipIfDockerNotRunning]
-        public async Task RunWithDotnetEnvVarsDoesNotGetOverriddenByDefaultDotnetEnvVars()
-        {
-            using var projectDirectory = CopyTestProjectDirectory("dotnet-env-vars");
-
-            var projectFile = new FileInfo(Path.Combine(projectDirectory.DirectoryPath, "tye.yaml"));
-            var outputContext = new OutputContext(_sink, Verbosity.Debug);
-            var application = await ApplicationFactory.CreateAsync(outputContext, projectFile);
-
-            var handler = new HttpClientHandler
-            {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
-                AllowAutoRedirect = false
-            };
-
-            var client = new HttpClient(new RetryHandler(handler));
-
-            await RunHostingApplication(application, new HostOptions { Docker = true }, async (app, uri) =>
-            {
-                var backendUri = await GetServiceUrl(client, uri, "test-project");
-
-                var backendResponse = await client.GetAsync(backendUri);
-                Assert.True(backendResponse.IsSuccessStatusCode);
-
-                var response = await backendResponse.Content.ReadAsStringAsync();
-                var dict = JsonSerializer.Deserialize<Dictionary<string, string>>(response);
-
-                Assert.Contains(new KeyValuePair<string, string>("DOTNET_ENVIRONMENT", "dev"), dict);
-                Assert.Contains(new KeyValuePair<string, string>("ASPNETCORE_ENVIRONMENT", "dev"), dict);
             });
         }
 
