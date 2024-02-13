@@ -135,33 +135,34 @@ services:
             // Debug targets can be null if not specified, so make sure calling host.Start does not throw.
             var outputContext = new OutputContext(_sink, Verbosity.Debug);
             var projectFile = new FileInfo(yamlFile);
-            var applicationBuilder = await ApplicationFactory.CreateAsync(outputContext, projectFile, "netcoreapp3.1");
+            var framework = "net7.0";
+            var applicationBuilder = await ApplicationFactory.CreateAsync(outputContext, projectFile, framework);
 
             Assert.Single(applicationBuilder.Services);
             var service = applicationBuilder.Services.Single(s => s.Name == "multi-targetframeworks");
 
             var containsTargetFramework = ((DotnetProjectServiceBuilder)service).BuildProperties.TryGetValue("TargetFramework", out var targetFramework);
             Assert.True(containsTargetFramework);
-            Assert.Equal("netcoreapp3.1", targetFramework);
+            Assert.Equal(framework, targetFramework);
         }
 
         [Fact]
         public async Task TargetFrameworkFromCliArgsDoesNotOverwriteYaml()
         {
             using var projectDirectory = TestHelpers.CopyTestProjectDirectory(Path.Combine("multi-targetframeworks"));
-            var yamlFile = Path.Combine(projectDirectory.DirectoryPath, "tye-with-netcoreapp21.yaml");
+            var yamlFile = Path.Combine(projectDirectory.DirectoryPath, "tye-with-net7.0.yaml");
 
             // Debug targets can be null if not specified, so make sure calling host.Start does not throw.
             var outputContext = new OutputContext(_sink, Verbosity.Debug);
             var projectFile = new FileInfo(yamlFile);
-            var applicationBuilder = await ApplicationFactory.CreateAsync(outputContext, projectFile, "netcoreapp3.1");
+            var applicationBuilder = await ApplicationFactory.CreateAsync(outputContext, projectFile, "net8.0");
 
             Assert.Single(applicationBuilder.Services);
             var service = applicationBuilder.Services.Single(s => s.Name == "multi-targetframeworks");
 
             var containsTargetFramework = ((DotnetProjectServiceBuilder)service).BuildProperties.TryGetValue("TargetFramework", out var targetFramework);
             Assert.True(containsTargetFramework);
-            Assert.Equal("netcoreapp2.1", targetFramework);
+            Assert.Equal("net7.0", targetFramework);
         }
 
         [Fact]
@@ -173,7 +174,7 @@ services:
             // Debug targets can be null if not specified, so make sure calling host.Start does not throw.
             var outputContext = new OutputContext(_sink, Verbosity.Debug);
             var projectFile = new FileInfo(yamlFile);
-            var applicationBuilder = await ApplicationFactory.CreateAsync(outputContext, projectFile, "net5.0");
+            var applicationBuilder = await ApplicationFactory.CreateAsync(outputContext, projectFile, "net7.0");
 
             Assert.Single(applicationBuilder.Services);
             var service = applicationBuilder.Services.Single(s => s.Name == "test-project");
@@ -205,7 +206,7 @@ services:
             var outputContext = new OutputContext(_sink, Verbosity.Debug);
             var projectFile = new FileInfo(yamlFile);
 
-            await Assert.ThrowsAsync<CommandException>(async () => await ApplicationFactory.CreateAsync(outputContext, projectFile, "net5.0"));
+            await Assert.ThrowsAsync<CommandException>(async () => await ApplicationFactory.CreateAsync(outputContext, projectFile, "netcoreapp1.1"));
         }
 
         [Fact]

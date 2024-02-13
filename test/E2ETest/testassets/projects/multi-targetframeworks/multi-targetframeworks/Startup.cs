@@ -28,12 +28,7 @@ namespace MultiTargetFrameworks
         {
             app.Use(async (httpContext, next) =>
             {
-#if NETCOREAPP3_1
                 await httpContext.Response.WriteAsync(System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription);
-#else
-                var framework = Assembly.GetEntryAssembly()?.GetCustomAttribute<TargetFrameworkAttribute>()?.FrameworkName;
-                await httpContext.Response.WriteAsync(framework);
-#endif
             });
         }
     }

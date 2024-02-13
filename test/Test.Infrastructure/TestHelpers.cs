@@ -19,6 +19,8 @@ namespace Test.Infrastructure
 {
     public static class TestHelpers
     {
+        private const string solutionName = "tye2";
+        
         private static readonly TimeSpan WaitForServicesTimeout = Debugger.IsAttached ? TimeSpan.FromMinutes(5) : TimeSpan.FromMinutes(1);
 
         // https://github.com/dotnet/aspnetcore/blob/5a0526dfd991419d5bce0d8ea525b50df2e37b04/src/Testing/src/TestPathUtilities.cs
@@ -47,7 +49,7 @@ namespace Test.Infrastructure
         public static DirectoryInfo GetTestAssetsDirectory()
         {
             return new DirectoryInfo(Path.Combine(
-                TestHelpers.GetSolutionRootDirectory("tye"),
+                TestHelpers.GetSolutionRootDirectory(solutionName),
                 "test",
                 "E2ETest",
                 "testassets"));
@@ -56,7 +58,7 @@ namespace Test.Infrastructure
         public static DirectoryInfo GetTestProjectDirectory(string projectName)
         {
             var directory = new DirectoryInfo(Path.Combine(
-                TestHelpers.GetSolutionRootDirectory("tye"),
+                TestHelpers.GetSolutionRootDirectory(solutionName),
                 "test",
                 "E2ETest",
                 "testassets",
@@ -69,7 +71,7 @@ namespace Test.Infrastructure
         public static DirectoryInfo GetSampleProjectDirectory(string projectName)
         {
             var directory = new DirectoryInfo(Path.Combine(
-                TestHelpers.GetSolutionRootDirectory("tye"),
+                TestHelpers.GetSolutionRootDirectory(solutionName),
                 "samples",
                 projectName));
             Assert.True(directory.Exists, $"Project {projectName} not found.");
@@ -83,7 +85,7 @@ namespace Test.Infrastructure
 
             // We need to hijack any P2P references to Tye libraries.
             // Test projects must use $(TyeLibrariesPath) to find their references.
-            var libraryPath = Path.Combine(TestHelpers.GetSolutionRootDirectory("tye"), "src");
+            var libraryPath = Path.Combine(TestHelpers.GetSolutionRootDirectory(solutionName), "src");
             if (!libraryPath.EndsWith(Path.DirectorySeparatorChar))
             {
                 libraryPath += Path.DirectorySeparatorChar;
