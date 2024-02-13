@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Http;
-using System.Reflection;
-using System.Runtime.Versioning;
 
 namespace MultiTargetFrameworks
 {
@@ -26,7 +24,7 @@ namespace MultiTargetFrameworks
 
         public void Configure(IApplicationBuilder app)
         {
-            app.Use(async (httpContext, next) =>
+            app.Run(async (httpContext) =>
             {
                 await httpContext.Response.WriteAsync(System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription);
             });

@@ -206,7 +206,7 @@ services:
             var outputContext = new OutputContext(_sink, Verbosity.Debug);
             var projectFile = new FileInfo(yamlFile);
 
-            await Assert.ThrowsAsync<CommandException>(async () => await ApplicationFactory.CreateAsync(outputContext, projectFile, "netcoreapp1.1"));
+            await Assert.ThrowsAsync<CommandException>(async () => await ApplicationFactory.CreateAsync(outputContext, projectFile, "netcoreapp0.0"));
         }
 
         [Fact]

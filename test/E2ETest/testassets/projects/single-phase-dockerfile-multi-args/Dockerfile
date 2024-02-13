@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 COPY . /app
 ENTRYPOINT ["dotnet", "single-phase-dockerfile-args.dll"]

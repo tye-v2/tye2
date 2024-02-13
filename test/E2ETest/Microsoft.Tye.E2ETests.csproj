@@ -38,9 +38,9 @@
     <None Remove="testassets\projects\non-standard-dashboard-port\test-project\appsettings.json" />
     <None Remove="testassets\projects\non-standard-dashboard-port\test-project\Properties\launchSettings.json" />
     <None Remove="testassets\projects\non-standard-dashboard-port\tye.yaml" />
-    <None Remove="testassets\projects\non-standard-dashboard-port-5.0\test-project\appsettings.Development.json" />
-    <None Remove="testassets\projects\non-standard-dashboard-port-5.0\test-project\appsettings.json" />
-    <None Remove="testassets\projects\non-standard-dashboard-port-5.0\tye.yaml" />
+    <None Remove="testassets\projects\non-standard-dashboard-port-7.0\test-project\appsettings.Development.json" />
+    <None Remove="testassets\projects\non-standard-dashboard-port-7.0\test-project\appsettings.json" />
+    <None Remove="testassets\projects\non-standard-dashboard-port-7.0\tye.yaml" />
     <Compile Include="..\..\src\shared\KubectlDetector.cs" Link="KubectlDetector.cs" />
   </ItemGroup>
 

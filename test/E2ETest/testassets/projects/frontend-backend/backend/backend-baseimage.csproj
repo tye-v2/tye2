@@ -1,13 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>Backend</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup>
     <ContainerBaseImage>mcr.microsoft.com/dotnet/sdk</ContainerBaseImage>
-    <ContainerBaseTag>6.0-focal</ContainerBaseTag>
+    <ContainerBaseTag>8.0-focal</ContainerBaseTag>
   </PropertyGroup>
 
   <ItemGroup>

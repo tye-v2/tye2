@@ -162,8 +162,8 @@ services:
 
         [ConditionalTheory]
         [SkipIfDockerNotRunning]
-        [InlineData("single-project", "mcr.microsoft.com/dotnet/aspnet:6.0")]
-        [InlineData("single-project-5.0", "mcr.microsoft.com/dotnet/aspnet:5.0")]
+        [InlineData("single-project", "mcr.microsoft.com/dotnet/aspnet:8.0")]
+        [InlineData("single-project-7.0", "mcr.microsoft.com/dotnet/aspnet:7.0")]
         public async Task SingleProjectWithDocker_UsesCorrectBaseImage(string projectName, string baseImage)
         {
             using var projectDirectory = CopyTestProjectDirectory(projectName);
@@ -489,7 +489,7 @@ services:
 
             // check ContainerInfo values
             Assert.True(string.Equals(project.ContainerInfo!.BaseImageName, "mcr.microsoft.com/dotnet/sdk"));
-            Assert.True(string.Equals(project.ContainerInfo!.BaseImageTag, "6.0-focal"));
+            Assert.True(string.Equals(project.ContainerInfo!.BaseImageTag, "8.0-focal"));
 
             // check projectInfo values
             var projectRunInfo = new ProjectRunInfo(project);
@@ -1215,7 +1215,7 @@ services:
         {
             using var projectDirectory = CopyTestProjectDirectory("multi-targetframeworks");
 
-            var projectFile = new FileInfo(Path.Combine(projectDirectory.DirectoryPath, "tye-with-netcoreapp31.yaml"));
+            var projectFile = new FileInfo(Path.Combine(projectDirectory.DirectoryPath, "tye-with-net8.0.yaml"));
             var outputContext = new OutputContext(_sink, Verbosity.Debug);
             var application = await ApplicationFactory.CreateAsync(outputContext, projectFile);
 
@@ -1236,7 +1236,7 @@ services:
                 Assert.True(backendResponse.IsSuccessStatusCode);
 
                 var responseContent = await backendResponse.Content.ReadAsStringAsync();
-                Assert.Contains(".NET Core 3.1", responseContent);
+                Assert.Contains(".NET 8", responseContent);
             });
         }
 
@@ -1248,7 +1248,7 @@ services:
 
             var projectFile = new FileInfo(Path.Combine(projectDirectory.DirectoryPath, "tye-no-buildproperties.yaml"));
             var outputContext = new OutputContext(_sink, Verbosity.Debug);
-            var application = await ApplicationFactory.CreateAsync(outputContext, projectFile, "netcoreapp3.1");
+            var application = await ApplicationFactory.CreateAsync(outputContext, projectFile, "net8.0");
 
             var handler = new HttpClientHandler
             {
@@ -1277,9 +1277,9 @@ services:
         {
             using var projectDirectory = CopyTestProjectDirectory("multi-targetframeworks");
 
-            var projectFile = new FileInfo(Path.Combine(projectDirectory.DirectoryPath, "tye-with-netcoreapp31.yaml"));
+            var projectFile = new FileInfo(Path.Combine(projectDirectory.DirectoryPath, "tye-with-net8.0.yaml"));
             var outputContext = new OutputContext(_sink, Verbosity.Debug);
-            var application = await ApplicationFactory.CreateAsync(outputContext, projectFile, "netcoreapp2.1");
+            var application = await ApplicationFactory.CreateAsync(outputContext, projectFile, "net7.0");
 
             var handler = new HttpClientHandler
             {
@@ -1298,14 +1298,14 @@ services:
                 Assert.True(backendResponse.IsSuccessStatusCode);
 
                 var responseContent = await backendResponse.Content.ReadAsStringAsync();
-                Assert.Contains(".NET Core 3.1", responseContent);
+                Assert.Contains(".NET 8", responseContent);
             });
         }
 
         [ConditionalTheory]
         [SkipIfDockerNotRunning]
-        [InlineData("non-standard-dashboard-port", "mcr.microsoft.com/dotnet/aspnet:6.0", 8005)]
-        [InlineData("non-standard-dashboard-port-5.0", "mcr.microsoft.com/dotnet/aspnet:5.0", 8006)]
+        [InlineData("non-standard-dashboard-port", "mcr.microsoft.com/dotnet/aspnet:8.0", 8005)]
+        [InlineData("non-standard-dashboard-port-7.0", "mcr.microsoft.com/dotnet/aspnet:7.0", 8006)]
         public async Task RunUsesYamlDashboardPort(string projectName, string baseImage, int expectedDashboardPort)
         {
             using var projectDirectory = CopyTestProjectDirectory(projectName);
@@ -1346,8 +1346,8 @@ services:
 
         [ConditionalTheory]
         [SkipIfDockerNotRunning]
-        [InlineData("non-standard-dashboard-port", "mcr.microsoft.com/dotnet/aspnet:6.0", 8005)]
-        [InlineData("non-standard-dashboard-port-5.0", "mcr.microsoft.com/dotnet/aspnet:5.0", 8006)]
+        [InlineData("non-standard-dashboard-port", "mcr.microsoft.com/dotnet/aspnet:8.0", 8005)]
+        [InlineData("non-standard-dashboard-port-7.0", "mcr.microsoft.com/dotnet/aspnet:7.0", 8006)]
         public async Task RunCliPortOverridesYamlDashboardPort(string projectName, string baseImage, int tyeYamlDashboardPort)
         {
             var cliDashboardPort = 8008;
@@ -1432,10 +1432,8 @@ services:
 
         private async Task RunHostingApplication(ApplicationBuilder application, HostOptions options, Func<Application, Uri, Task> execute)
         {
-            await using var host = new TyeHost(application.ToHostingApplication(), options)
-            {
-                Sink = _sink,
-            };
+            await using var host = new TyeHost(application.ToHostingApplication(), options);
+            host.Sink = _sink;
 
             try
             {
@@ -1462,7 +1460,7 @@ services:
 
                         var description = await client.GetStringAsync(new Uri(uri, $"/api/v1/services/{s.Description.Name}"));
 
-                        _output.WriteLine($"Service defintion: {s.Description.Name}");
+                        _output.WriteLine($"Service definition: {s.Description.Name}");
                         _output.WriteLine(description);
                     }
                 }
