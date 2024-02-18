@@ -96,7 +96,8 @@ namespace E2ETest
 name: frontend-backend
 services:
 - name: backend
-  azureFunction: backend/
+  azureFunction: backend/  
+  args: start --csharp        
 - name: frontend
   project: frontend/frontend.csproj";
 
@@ -296,7 +297,7 @@ services:
             container.Args = $"dotnet /app/{outputFileName} {project.Args}";
             container.Bindings.AddRange(project.Bindings.Where(b => b.Protocol != "https"));
 
-            await ProcessUtil.RunAsync("dotnet", $"publish \"{project.ProjectFile.FullName}\" /nologo", outputDataReceived: _sink.WriteLine, errorDataReceived: _sink.WriteLine);
+            await ProcessUtil.RunAsync("dotnet", $"publish \"{project.ProjectFile.FullName}\"  /nologo", outputDataReceived: _sink.WriteLine, errorDataReceived: _sink.WriteLine);
             application.Services.Add(container);
 
             var handler = new HttpClientHandler
@@ -345,7 +346,7 @@ services:
             // We're not setting up the dev cert here
             container.Bindings.AddRange(project.Bindings.Where(b => b.Protocol != "https"));
 
-            await ProcessUtil.RunAsync("dotnet", $"publish \"{project.ProjectFile.FullName}\" /nologo", outputDataReceived: _sink.WriteLine, errorDataReceived: _sink.WriteLine);
+            await ProcessUtil.RunAsync("dotnet", $"publish \"{project.ProjectFile.FullName}\"  /nologo", outputDataReceived: _sink.WriteLine, errorDataReceived: _sink.WriteLine);
             application.Services.Add(container);
 
             var handler = new HttpClientHandler
@@ -1034,7 +1035,7 @@ services:
                 Assert.True(votingResponse.IsSuccessStatusCode);
                 Assert.Equal(HttpStatusCode.NotFound, workerResponse.StatusCode);
 
-                // results isn't running.
+                //results isn't running.
                 var resultsResponse = await client.GetAsync($"{uri}api/v1/services/results");
                 Assert.Equal(HttpStatusCode.NotFound, resultsResponse.StatusCode);
             });
@@ -1050,9 +1051,9 @@ services:
 name: VotingSample
 services:
 - name: vote
-  repository: https://github.com/jkotalik/TyeMultiRepoVoting
+  repository: https://github.com/drakon660/TyeMultiRepoVoting
 - name: results
-  repository: https://github.com/jkotalik/TyeMultiRepoResults";
+  repository: https://github.com/drakon660/TyeMultiRepoResults";
 
             var yamlFile = Path.Combine(projectDirectory.DirectoryPath, "tye.yaml");
             var projectFile = new FileInfo(yamlFile);
@@ -1267,7 +1268,7 @@ services:
                 Assert.True(backendResponse.IsSuccessStatusCode);
 
                 var responseContent = await backendResponse.Content.ReadAsStringAsync();
-                Assert.Contains(".NET Core 3.1", responseContent);
+                Assert.Contains(".NET 8.0", responseContent);
             });
         }
 
