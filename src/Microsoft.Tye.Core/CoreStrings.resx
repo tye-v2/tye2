@@ -109,7 +109,7 @@
     <value>text/microsoft-resx</value>
   </resheader>
   <resheader name="version">
-    <value>2.0</value>
+    <value>1.3</value>
   </resheader>
   <resheader name="reader">
     <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -181,6 +181,6 @@
     <value>Path "{path}" was not found.</value>
   </data>
   <data name="ExpectedEnvironmentVariableValue" xml:space="preserve">
-    <value>Expected a value for environment variable "{key}".</value>
+      <value>Expected a value for environment variable "{key}". </value>
   </data>
 </root>

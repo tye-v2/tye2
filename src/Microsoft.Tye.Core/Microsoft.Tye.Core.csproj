@@ -20,6 +20,11 @@
     <PackageReference Include="System.Security.Principal.Windows" Version="5.0.0" />
     <PackageReference Include="YamlDotNet" Version="11.2.1" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+
+    <PackageReference Include="Microsoft.CodeAnalysis.ResxSourceGenerator" Version="3.11.0-beta1.24072.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
