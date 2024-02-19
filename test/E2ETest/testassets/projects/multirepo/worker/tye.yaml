@@ -3,7 +3,8 @@ services:
 - name: redis
   image: redis
   bindings:
-    - port: 6379
+    - port: 6378
+      containerPort: 6379
       connectionString: ${host}:${port}
 - name: worker
   project: worker.csproj
