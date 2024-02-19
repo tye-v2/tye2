@@ -1051,9 +1051,9 @@ services:
 name: VotingSample
 services:
 - name: vote
-  repository: https://github.com/drakon660/TyeMultiRepoVoting
+  repository: https://github.com/tye-v2/tests-multi-repo-voting.git
 - name: results
-  repository: https://github.com/drakon660/TyeMultiRepoResults";
+  repository: https://github.com/tye-v2/tests-multi-repo-voting-results.git";
 
             var yamlFile = Path.Combine(projectDirectory.DirectoryPath, "tye.yaml");
             var projectFile = new FileInfo(yamlFile);
