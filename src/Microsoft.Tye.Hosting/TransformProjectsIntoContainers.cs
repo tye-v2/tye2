@@ -63,6 +63,12 @@ namespace Microsoft.Tye.Hosting
             var buildArgs = project.BuildProperties.Aggregate(string.Empty, (current, property) => current + $" /p:{property.Key}={property.Value}").TrimStart();
 
             var publishCommand = $"publish \"{service.Status.ProjectFilePath}\" --framework {targetFramework} {buildArgs} /nologo";
+            
+            //dotnet 6.0 publish has default debug mode when publish is being run, in .net 8.0 is release mode when publish
+            if (targetFramework.Contains("net8") && !buildArgs.Contains("Configuration"))
+            {
+                publishCommand = $"publish \"{service.Status.ProjectFilePath}\" --configuration=Debug  --framework {targetFramework} {buildArgs} /nologo";
+            }
 
             service.Logs.OnNext($"dotnet {publishCommand}");
 
