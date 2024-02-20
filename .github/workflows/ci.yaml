@@ -12,7 +12,10 @@ on:
 
 jobs:
   ci:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+        matrix:
+            os: [ubuntu-latest, windows-latest, macos-latest]
 
     permissions:
       checks: write
@@ -40,7 +43,14 @@ jobs:
         run: npm install -g azure-functions-core-tools@4
       # dapr
       - name: Install Dapr SDK
+        if: matrix.os == 'ubuntu-latest'
         run: wget -q https://raw.githubusercontent.com/dapr/cli/master/install/install.sh -O - | /bin/bash
+      - name: Install Dapr SDK
+        if: matrix.os == 'windows-latest'
+        run: powershell -Command "iwr -useb https://raw.githubusercontent.com/dapr/cli/master/install/install.ps1 | iex"
+      - name: Install Dapr SDK
+        if: matrix.os == 'macos-latest'
+        run: curl -fsSL https://raw.githubusercontent.com/dapr/cli/master/install/install.sh | /bin/bash
       - name: Init Dapr
         run: dapr init
 
@@ -48,19 +58,14 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --no-restore
-
-      - name: Test
-        run: |
-          docker network create --driver bridge tye_network_5409ee94-f
-          docker network ls
       
-      # - name: Test
-      #   run: dotnet test --no-build --logger trx
+      - name: Test
+        run: dotnet test --no-build --logger trx
 
-      # - name: Publish Test Results
-      #   uses: EnricoMi/publish-unit-test-result-action@v2
-      #   if: always()
-      #   with:
-      #     job_summary: true
-      #     files: |
-      #       **/*.trx
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          job_summary: true
+          files: |
+            **/*.trx
