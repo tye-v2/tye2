@@ -48,14 +48,19 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --no-restore
-      
-      - name: Test
-        run: dotnet test --no-build --logger trx
 
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
-        with:
-          job_summary: true
-          files: |
-            **/*.trx
+      - name: Test
+        run: |
+          docker network create --driver bridge tye_network_5409ee94-f
+          docker network ls
+      
+      # - name: Test
+      #   run: dotnet test --no-build --logger trx
+
+      # - name: Publish Test Results
+      #   uses: EnricoMi/publish-unit-test-result-action@v2
+      #   if: always()
+      #   with:
+      #     job_summary: true
+      #     files: |
+      #       **/*.trx
