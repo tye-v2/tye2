@@ -1428,7 +1428,7 @@ services:
             var serviceResult = await client.GetStringAsync($"{uri}api/v1/services/{serviceName}");
             var service = JsonSerializer.Deserialize<V1Service>(serviceResult, _options);
             var binding = service!.Description!.Bindings!.Where(b => b.Protocol == "http").Single();
-            return $"{binding.Protocol ?? "http"}://localhost:{binding.Port}";
+            return $"{binding.Protocol ?? "http"}://127.0.0.1:{binding.Port}";
         }
 
         private async Task RunHostingApplication(ApplicationBuilder application, HostOptions options, Func<Application, Uri, Task> execute)
