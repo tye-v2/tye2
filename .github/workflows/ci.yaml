@@ -64,8 +64,15 @@ jobs:
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
+        if: matrix.os == 'ubuntu-latest'
         with:
           job_summary: true
           files: |
             **/*.trx
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action/composite@v2
+        if: matrix.os == 'windows-latest' || matrix.os == 'macos-latest'
+        with:
+          job_summary: true
+          files: |
+            **/*.trx          
