@@ -21,6 +21,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      # test prerequisites
+      # dotnet 6,7,8
       - name: Install .NET 6
         uses: actions/setup-dotnet@v3
         with:
@@ -33,10 +35,14 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 8.0.x
+      # azure function sdk
       - name: Install Azure Functions SDK
         run: npm install -g azure-functions-core-tools@4
+      # dapr
       - name: Install Dapr SDK
         run: wget -q https://raw.githubusercontent.com/dapr/cli/master/install/install.sh -O - | /bin/bash
+      - name: Init Dapr
+        run: dapr init
 
       - name: Restore
         run: dotnet restore
