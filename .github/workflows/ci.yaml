@@ -15,7 +15,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
         matrix:
-            os: [ubuntu-latest, windows-latest, macos-latest]
+            #os: [ubuntu-latest, windows-latest, macos-latest]
+            os: [windows-latest]
 
     permissions:
       checks: write
@@ -50,16 +51,18 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: wget -q https://raw.githubusercontent.com/dapr/cli/master/install/install.sh -O - | /bin/bash
       - name: Install Dapr SDK
-        if: matrix.os == 'windows-latest'
-        shell: pwsh
-        run: |
-          iwr -useb https://raw.githubusercontent.com/dapr/cli/master/install/install.ps1 | iex
-          refreshenv
-      - name: Install Dapr SDK
         if: matrix.os == 'macos-latest'
         run: curl -fsSL https://raw.githubusercontent.com/dapr/cli/master/install/install.sh | /bin/bash
       - name: Init Dapr
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'      
         run: dapr init
+      - name: Install Dapr SDK
+        if: matrix.os == 'windows-latest'
+        shell: pwsh
+        run: iwr -useb https://raw.githubusercontent.com/dapr/cli/master/install/install.ps1 | iex        
+      - name: Init Dapr
+        if: matrix.os == 'windows-latest'
+        run: c:\dapr init        
 
       - name: Restore
         run: dotnet restore
