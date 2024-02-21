@@ -62,7 +62,9 @@ jobs:
         run: iwr -useb https://raw.githubusercontent.com/dapr/cli/master/install/install.ps1 | iex        
       - name: Init Dapr
         if: matrix.os == 'windows-latest'
-        run: c:\dapr init        
+        run: |
+          cd c:
+          dapr init        
 
       - name: Restore
         run: dotnet restore
