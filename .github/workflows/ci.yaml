@@ -47,10 +47,10 @@ jobs:
       - name: Install Azure Functions SDK
         run: npm install -g azure-functions-core-tools@4
       # dapr
-      - name: Dapr tool installer
-        uses: dapr/setup-dapr@v1
-      - name: Init Dapr  
-        run: dapr init      
+      # - name: Dapr tool installer
+      #   uses: dapr/setup-dapr@v1
+      # - name: Init Dapr  
+      #   run: dapr init      
 
       - name: Restore
         run: dotnet restore
