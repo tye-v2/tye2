@@ -63,7 +63,7 @@ jobs:
       - name: Init Dapr
         if: matrix.os == 'windows-latest'
         run: |
-          cd c:
+          cd c:/dapr
           dapr init        
 
       - name: Restore
