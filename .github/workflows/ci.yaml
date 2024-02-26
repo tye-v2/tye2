@@ -16,7 +16,7 @@ jobs:
     strategy:
         matrix:
             #os: [ubuntu-latest, windows-latest, macos-latest]
-            os: [windows-latest]
+            os: [ubuntu-latest]
 
     permissions:
       checks: write
@@ -47,10 +47,10 @@ jobs:
       - name: Install Azure Functions SDK
         run: npm install -g azure-functions-core-tools@4
       # dapr
-      # - name: Dapr tool installer
-      #   uses: dapr/setup-dapr@v1
-      # - name: Init Dapr  
-      #   run: dapr init      
+      - name: Dapr tool installer
+        uses: dapr/setup-dapr@v1
+      - name: Init Dapr  
+        run: dapr init      
 
       - name: Restore
         run: dotnet restore
@@ -69,7 +69,7 @@ jobs:
             **/*.trx
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action/composite@v2
-        if: matrix.os == 'windows-latest' || matrix.os == 'macos-latest'
+        if: matrix.os != 'ubuntu-latest'
         with:
           job_summary: true
           files: |
