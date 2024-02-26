@@ -200,6 +200,7 @@ services:
 
         [ConditionalFact]
         [SkipIfDockerNotRunning]
+        [Trait("FailsInGithubActions", "true")]
         public async Task FrontendBackendRunTestWithDocker()
         {
             using var projectDirectory = CopyTestProjectDirectory("frontend-backend");
@@ -236,6 +237,7 @@ services:
         [SkipIfDockerNotRunning]
         [InlineData("Debug")]
         [InlineData("Release")]
+        [Trait("FailsInGithubActions", "true")]
         public async Task FrontendBackendRunTestWithDockerAndBuildConfigurationAsProperty(string buildConfiguration)
         {
             using var projectDirectory = CopyTestProjectDirectory("frontend-backend");
@@ -323,6 +325,7 @@ services:
 
         [ConditionalFact]
         [SkipIfDockerNotRunning]
+        [Trait("FailsInGithubActions", "true")]
         public async Task FrontendDockerBackendProject()
         {
             using var projectDirectory = CopyTestProjectDirectory("frontend-backend");
@@ -555,6 +558,7 @@ services:
 
         [ConditionalFact]
         [SkipIfDockerNotRunning]
+        [Trait("FailsInGithubActions", "true")]
         public async Task DockerNetworkAssignmentTest()
         {
             using var projectDirectory = CopyTestProjectDirectory("frontend-backend");
@@ -612,6 +616,7 @@ services:
 
         [ConditionalFact]
         [SkipIfDockerNotRunning]
+        [Trait("FailsInGithubActions", "true")]
         public async Task DockerNetworkAssignmentForNonExistingNetworkTest()
         {
             using var projectDirectory = CopyTestProjectDirectory("frontend-backend");
