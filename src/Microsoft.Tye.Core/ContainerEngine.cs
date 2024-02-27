@@ -152,8 +152,8 @@ namespace Microsoft.Tye
                 return false;
             }
 
-            // if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            // {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
                 // See: https://github.com/docker/for-linux/issues/264
                 //
                 // host.docker.internal is making it's way into linux docker but doesn't work yet
@@ -165,11 +165,11 @@ namespace Microsoft.Tye
                 // if we use the IP address to reach out of the host. This works fine on osx and windows
                 // but doesn't work on linux.
                 aspnetUrlsHost = "*";
-            // }
-            // else
-            // {
-            //     containerHost = "host.docker.internal";
-            // }
+            }
+            else
+            {
+                containerHost = "host.docker.internal";
+            }
 
             if (result.ExitCode != 0)
             {
