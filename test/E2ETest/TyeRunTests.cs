@@ -203,8 +203,6 @@ services:
         [Trait("FailsInGithubActions", "true")]
         public async Task FrontendBackendRunTestWithDocker()
         {
-            Assert.True(RuntimeInformation.IsOSPlatform(OSPlatform.Linux));
-
             using var projectDirectory = CopyTestProjectDirectory("frontend-backend");
 
             var projectFile = new FileInfo(Path.Combine(projectDirectory.DirectoryPath, "tye.yaml"));

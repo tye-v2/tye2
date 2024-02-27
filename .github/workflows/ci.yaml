@@ -55,7 +55,7 @@ jobs:
         run: dotnet build --no-restore
       
       - name: Test
-        run: dotnet test --filter FailsInGithubActions=true --no-build --logger trx
+        run: dotnet test --filter FailsInGithubActions!=true --no-build --logger trx
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
