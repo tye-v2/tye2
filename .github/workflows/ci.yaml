@@ -6,22 +6,61 @@ name: CI
 on:
   workflow_dispatch:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
-  build:
-
+  ci:
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      pull-requests: write    
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
+      - uses: actions/checkout@v3
+
+      - name: Find Docker Host IP
+        uses: addnab/docker-run-action@v1
+        with:
+          image: alpine:latest
+          run: apk update > /dev/null && apk add iproute2 > /dev/null && ip -4 route show default | cut -d' ' -f3      
+
+      # test prerequisites
+      # dotnet 6,7,8
+      - name: Install .NET 6
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+      - name: Install .NET 7
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.0.x
+      - name: Install .NET 8
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+      # azure function sdk
+      - name: Install Azure Functions SDK
+        run: npm install -g azure-functions-core-tools@4
+      # dapr
+      - name: Dapr tool installer
+        uses: dapr/setup-dapr@v1
+      - name: Init Dapr  
+        run: dapr init      
+
+      - name: Restore
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+      
+      - name: Test
+        run: dotnet test --filter FailsInGithubActions!=true --no-build --logger trx
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()        
+        with:
+          job_summary: true
+          files: |
+            **/*.trx

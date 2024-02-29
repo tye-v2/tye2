@@ -159,7 +159,7 @@ namespace Microsoft.Tye
                 // host.docker.internal is making it's way into linux docker but doesn't work yet
                 // instead we use the machine IP
                 var addresses = Dns.GetHostAddresses(Dns.GetHostName());
-                containerHost = addresses[0].ToString();
+                containerHost = addresses.Last().ToString();
 
                 // We need to bind to all interfaces on linux since the container -> host communication won't work
                 // if we use the IP address to reach out of the host. This works fine on osx and windows

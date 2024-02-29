@@ -51,7 +51,7 @@ namespace Microsoft.Extensions.Logging.Testing
             {
                 if (!actualValues.Contains(expectedPair, comparer))
                 {
-                    throw new EqualException(
+                    throw EqualException.ForMismatchedValues(
                         expected: GetString(expectedValues),
                         actual: GetString(actualValues));
                 }
