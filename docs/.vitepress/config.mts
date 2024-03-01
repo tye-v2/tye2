@@ -2,8 +2,8 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "Tye v2",
-  description: "Tye v2",
+  title: "Tye",
+  description: "Tye",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -41,7 +41,7 @@ export default defineConfig({
           { text: 'Azure functions', link: '/recipes/azure_functions' },    
           { text: 'Dapr', link: '/recipes/dapr' },
           { text: 'Distributed Tracing', link: '/recipes/distributed_tracing' },
-          { text: 'Githubactions AKS', link: '/recipes/githubactions_aks' },
+          { text: 'Githu Actions AKS', link: '/recipes/githubactions_aks' },
           { text: 'Ingress', link: '/recipes/ingress' },
           { text: 'Logging Elastic', link: '/recipes/logging_elastic' },
           { text: 'Probes', link: '/recipes/probes' },

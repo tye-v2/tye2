@@ -9,9 +9,19 @@
             "description": "The application name.",
             "type": "string"
         },
-        "registry": {
-            "description": "Dockerhub username or hostname of remote registry. Used for tagging images.",
-            "type": "string"
+        "registry":
+        {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "DockerHub username (exampleuser) or the hostname of a container registry",
+                    "type": "string"
+                },
+                "pullSecret": {
+                    "description": "Specifies the optional secret",
+                    "type": "string"
+                }
+            }
         },
         "containerEngine": {
             "description": "Container engine.",
@@ -119,28 +129,39 @@
                 "connectionString": {
                     "description": "The connection string.",
                     "type": "string"
+                },
+                "routes": {
+                    "description": "Specifies the list of additional routes.",
+                    "type": "array"
                 }
             },
             "additionalProperties": false
         },
         "env-var": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "description": "Environment variable name.",
-                    "type": "string"
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^[A-Za-z_][A-Za-z0-9_]*(=.*)?$",
+                "description": "An environment variable in the format KEY=VALUE or just KEY."
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Environment variable name."
+                  },
+                  "value": {
+                    "type": "string",
+                    "description": "Environment variable value."
+                  }
                 },
-                "value": {
-                    "description": "Environment variable value.",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "name",
-                "value"
+                "required": ["name", "value"],
+                "description": "An environment variable object with 'name' and 'value' properties."
+              }
             ],
-            "additionalProperties": false
-        },
+            "description": "An environment variable can be either a string in the format KEY=VALUE or just KEY, or an object with 'name' and 'value' properties."
+          },    
         "build-property": {
             "type": "object",
             "properties": {
@@ -514,7 +535,7 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/env-var"
-                    }
+                   }
                 },
                 "buildProperties": {
                     "description": "Build properties to use when launching or building a project.",
@@ -561,5 +582,6 @@
                 "name"
             ]
         }
+       
     }
 }
