@@ -2,12 +2,14 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "Tye",
+  base: '/tye-v2.github.io/',
+  title: "Tye 2",
   description: "Tye",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },      
+      { text: 'Schema', link: '/reference/schema' },
       { text: 'CommandLine', link: '/commandline/tye' },
       { text: 'Tutorials', link: '/tutorials/01_deploy' },
       { text: 'Recipes', link: '/recipes/azure_functions' },
