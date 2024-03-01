@@ -30,5 +30,6 @@ If anyone has interest in using, testing or contributing to this project going f
 Hoping to see as many of you here!
 
 ## Docs
-
-The original readme that links to all docs and samples can be found [here](./README_old.md).
+To run docs locally :
+npm add -D vitepress
+npm run docs:dev
