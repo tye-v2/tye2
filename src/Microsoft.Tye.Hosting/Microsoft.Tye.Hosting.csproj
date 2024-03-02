@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Description>Orchestration host APIs.</Description>
     <AssemblyName>Microsoft.Tye.Hosting</AssemblyName>
     <PackageId>Microsoft.Tye.Hosting</PackageId>
@@ -20,12 +20,12 @@
 
   <ItemGroup>
     <PackageReference Include="Bedrock.Framework" Version="0.1.62-alpha.g8a965bbcba" />
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="3.1.0" />
-    <PackageReference Include="Serilog.Extensions.Hosting" Version="3.0.0" />
-    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
-    <PackageReference Include="System.IO.Pipelines" Version="4.7.2" />
-    <PackageReference Include="System.Reactive" Version="4.3.2" />
-    <PackageReference Include="YamlDotNet" Version="11.2.1" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="8.0.2" />
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
+    <PackageReference Include="System.IO.Pipelines" Version="8.0.0" />
+    <PackageReference Include="System.Reactive" Version="6.0.0" />
+    <PackageReference Include="YamlDotNet" Version="15.1.2" />
   </ItemGroup>
 
   <ItemGroup>
