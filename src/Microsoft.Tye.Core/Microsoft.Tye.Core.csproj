@@ -1,25 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>Tye</RootNamespace>
     <AssemblyName>Microsoft.Tye.Core</AssemblyName>
     <PackageId>Microsoft.Tye.Core</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="KubernetesClient" Version="6.0.25" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    
-    <PackageReference Include="Microsoft.Win32.Registry" Version="4.7.0" />
-    <PackageReference Include="semver" Version="2.0.6" />
+    <PackageReference Include="KubernetesClient" Version="6.0.26" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="semver" Version="2.3.0" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.20071.2" />
     <PackageReference Include="System.Commandline.Rendering" Version="0.3.0-alpha.20070.2" />
-    <PackageReference Include="System.Security.Cryptography.Cng" Version="5.0.0" />
     <!-- Hoisted to avoid a conflict with Microsoft.Build -->
-    <PackageReference Include="System.Security.Principal.Windows" Version="5.0.0" />
-    <PackageReference Include="YamlDotNet" Version="11.2.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+
+    <PackageReference Include="YamlDotNet" Version="15.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
 
     <!-- RG 2024-02-19 #7 - needed to generate resx codebehind without MS Arcade build -->
     <PackageReference Include="Microsoft.CodeAnalysis.ResxSourceGenerator" Version="3.11.0-beta1.24072.1">
