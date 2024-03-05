@@ -395,6 +395,7 @@ Bindings should either provide:
 
 ```yaml
 name: myapplication
+services:
 - name: rabbit
   image: rabbitmq:3-management
 
@@ -454,6 +455,7 @@ Specifies that the port should be assigned randomly. Defaults to `false`. This i
 
 ```yaml
 name: myapplication
+services:
 - name: nginx
   image: nginx
 
@@ -643,7 +645,7 @@ If a `readiness` probe fails for a replica, Tye doesn't restart that replica, bu
 
 ### Liveness and Readiness Example
 
-```
+```yaml
 name: myapplication
 services:
   - name: webapi
@@ -693,8 +695,7 @@ The `HttpProber` tells Tye which endpoint, port, protocol and which headers to u
 
 ### HttpProber Example  
 
-```
-...
+```yaml
 liveness:
   # An HttpProber
   http:
@@ -705,9 +706,7 @@ liveness:
       - name: HeaderA
         value: ValueA
       - name: HeaderB
-        value: ValueB
-  ...
-...
+        value: ValueB  
 ```
 
 In this example, the `liveness` probe defines an `HttpProber` that will probe the replicas of the service at the `/healthy` endpoint (*HTTP GET*), on port `8080`, using HTTP (*unsecure*), and providing two headers (`HeaderA` and `HeaderB`) with the values `ValueA` and `ValueB` respectively.  
