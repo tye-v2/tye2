@@ -47,7 +47,9 @@ jobs:
       - name: Dapr tool installer
         uses: dapr/setup-dapr@v1
       - name: Init Dapr  
-        run: dapr init      
+        run: |
+          dapr init      
+          dapr --version
 
       - name: Restore
         run: dotnet restore
