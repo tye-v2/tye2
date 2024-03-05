@@ -153,7 +153,7 @@ services:
                 var backendUri = await GetServiceUrl(client, uri, "dapr-test-project");
                 
                 //Wait for the services to start
-                await Task.Delay(10000);
+                await Task.Delay(20000);
                 
                 var backendResponse = await client.GetAsync(backendUri);
                 
