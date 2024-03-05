@@ -3,7 +3,7 @@ import { defineConfig } from 'vitepress'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   ignoreDeadLinks: true,
-  base: '/tye-v2.github.io/',
+  base: '/tye-v2.github.io',
   title: "Tye 2",
   description: "Tye",
   themeConfig: {
