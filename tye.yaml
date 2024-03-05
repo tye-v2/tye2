@@ -1,0 +1,13 @@
+extensions:
+- name: dapr
+  config: common
+  enable-profiling: true
+  services:
+    frontend:
+      components-path: "./frontend/components"
+    backend:
+      components-path: "./backend/components"
+
+services:
+- name: frontend
+- name: backend
