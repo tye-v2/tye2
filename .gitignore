@@ -356,3 +356,7 @@ MigrationBackup/
 
 # Jetbrains Rider working folder
 .idea/
+
+# VitePress
+docs/.vitepress/dist
+docs/.vitepress/cache
