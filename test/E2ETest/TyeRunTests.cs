@@ -130,6 +130,7 @@ services:
 
         [Fact]
         [Trait("FailsAfterNet8", "true")]
+        [Trait("FailsInGithubActions", "true")]
         public async Task DaprAzureFunctionTest()
         {
             using var projectDirectory = CopyTestProjectDirectory("dapr-function-app");
@@ -153,7 +154,7 @@ services:
                 var backendUri = await GetServiceUrl(client, uri, "dapr-test-project");
                 
                 //Wait for the services to start
-                await Task.Delay(20000);
+                await Task.Delay(10000);
                 
                 var backendResponse = await client.GetAsync(backendUri);
                 

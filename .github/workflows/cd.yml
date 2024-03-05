@@ -4,6 +4,8 @@ on:
   workflow_dispatch:
   push:
     branches: ["main"]
+    paths:
+      - 'src/**'
 
 jobs:
   build:
@@ -35,13 +37,12 @@ jobs:
         run: dotnet build --no-restore
       - name: Publish
         run: dotnet publish ./src/tye/tye.csproj -c Release -o ./tye2-publish --no-restore -p:AssemblyVersion=${{ steps.gitversion.outputs.AssemblySemVer }} -p:FileVersion=${{ steps.gitversion.outputs.AssemblySemFileVer }} -p:InformationalVersion=${{ steps.gitversion.outputs.NuGetVersionV2 }}
+      
       - name: Pack
         run: dotnet pack ./src/tye/tye.csproj -c Release -o ./tye2-pack --no-restore -p:AssemblyVersion=${{ steps.gitversion.outputs.AssemblySemVer }} -p:FileVersion=${{ steps.gitversion.outputs.AssemblySemFileVer }} -p:InformationalVersion=${{ steps.gitversion.outputs.NuGetVersionV2 }} -p:Version=${{ steps.gitversion.outputs.NuGetVersionV2 }}
       - name: Push to nuget
-        run: dotnet nuget push ./tye2-pack/tye2.${{ steps.gitversion.outputs.NuGetVersionV2 }}.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate       
-      # - uses: montudor/action-zip@v1
-      #   with:
-      #     args: zip -qq -r tye2.zip ./tye2-publish
+        run: dotnet nuget push ./tye2-pack/tye2.${{ steps.gitversion.outputs.NuGetVersionV2 }}.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+
       - uses: actions/upload-artifact@v4
         with:
           name: tye2-${{ steps.gitversion.outputs.NuGetVersionV2 }}.zip
