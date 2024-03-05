@@ -35,10 +35,10 @@ jobs:
         run: dotnet build --no-restore
       - name: Publish
         run: dotnet publish ./src/tye/tye.csproj -c Release -o ./tye2-publish --no-restore -p:AssemblyVersion=${{ steps.gitversion.outputs.AssemblySemVer }} -p:FileVersion=${{ steps.gitversion.outputs.AssemblySemFileVer }} -p:InformationalVersion=${{ steps.gitversion.outputs.NuGetVersionV2 }}   
-      - uses: montudor/action-zip@v1
-        with:
-          args: zip -qq -r tye2.zip ./tye2-publish
+      # - uses: montudor/action-zip@v1
+      #   with:
+      #     args: zip -qq -r tye2.zip ./tye2-publish
       - uses: actions/upload-artifact@v4
         with:
           name: tye2-${{ steps.gitversion.outputs.NuGetVersionV2 }}.zip
-          path: tye2.zip
+          path: ./tye2-publish
