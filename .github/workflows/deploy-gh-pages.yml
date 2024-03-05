@@ -19,8 +19,7 @@ permissions:
 concurrency:
   group: "pages"
   cancel-in-progress: false
-j
-obs:
+jobs:
   # Build job
   build:
     environment:
