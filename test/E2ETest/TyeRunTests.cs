@@ -19,6 +19,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.Tye;
 using Microsoft.Tye.Hosting;
 using Microsoft.Tye.Hosting.Model;
@@ -126,7 +127,9 @@ services:
                 Assert.True(frontendResponse.IsSuccessStatusCode);
             });
         }
+
         [Fact]
+        [Trait("FailsAfterNet8", "true")]
         public async Task DaprAzureFunctionTest()
         {
             using var projectDirectory = CopyTestProjectDirectory("dapr-function-app");
@@ -157,7 +160,7 @@ services:
                 Assert.True(backendResponse.IsSuccessStatusCode);
                 
                 var responseContent = await backendResponse.Content.ReadAsStringAsync();
-                Assert.Contains("Welcome to Azure Functions!", responseContent);
+                responseContent.Should().Contain("Welcome to Azure Functions!");
             });
         }
 
