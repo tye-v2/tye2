@@ -36,7 +36,7 @@ jobs:
       - name: Publish
         run: dotnet publish ./src/tye/tye.csproj -c Release -o ./tye2-publish --no-restore -p:AssemblyVersion=${{ steps.gitversion.outputs.AssemblySemVer }} -p:FileVersion=${{ steps.gitversion.outputs.AssemblySemFileVer }} -p:InformationalVersion=${{ steps.gitversion.outputs.NuGetVersionV2 }}
       - name: Pack
-        run: dotnet paack ./src/tye/tye.csproj -c Release -o ./tye2-pack --no-restore -p:AssemblyVersion=${{ steps.gitversion.outputs.AssemblySemVer }} -p:FileVersion=${{ steps.gitversion.outputs.AssemblySemFileVer }} -p:InformationalVersion=${{ steps.gitversion.outputs.NuGetVersionV2 }} -p:Version=${{ steps.gitversion.outputs.NuGetVersionV2 }}
+        run: dotnet pack ./src/tye/tye.csproj -c Release -o ./tye2-pack --no-restore -p:AssemblyVersion=${{ steps.gitversion.outputs.AssemblySemVer }} -p:FileVersion=${{ steps.gitversion.outputs.AssemblySemFileVer }} -p:InformationalVersion=${{ steps.gitversion.outputs.NuGetVersionV2 }} -p:Version=${{ steps.gitversion.outputs.NuGetVersionV2 }}
       - name: Push to nuget
         run: dotnet nuget push ./tye2-pack/${{ steps.gitversion.outputs.NuGetVersionV2 }}.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source "github"        
       # - uses: montudor/action-zip@v1
