@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <RootNamespace>Microsoft.Tye</RootNamespace>
-    <AssemblyName>tye</AssemblyName>
+    <AssemblyName>tye2</AssemblyName>
     <PackageId>Microsoft.Tye</PackageId>
     <ToolCommandName>tye</ToolCommandName>
     <PackAsTool>true</PackAsTool>
