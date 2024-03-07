@@ -5,7 +5,7 @@ export default defineConfig({
   ignoreDeadLinks: true,
   base: '/tye2/',
   title: "Tye 2",
-  description: "Tye",
+  description: "Tye 2",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
