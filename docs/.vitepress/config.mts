@@ -2,9 +2,10 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  base: '/tye-v2.github.io/',
+  ignoreDeadLinks: true,
+  base: '/tye2/',
   title: "Tye 2",
-  description: "Tye",
+  description: "Tye 2",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
