@@ -7,8 +7,12 @@ on:
   workflow_dispatch:
   push:
     branches: ["main"]
+    paths:
+      - 'src/**'
   pull_request:
     branches: ["main"]
+    paths:
+      - 'src/**'    
 
 jobs:
   ci:
@@ -19,12 +23,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
-      - name: Find Docker Host IP
-        uses: addnab/docker-run-action@v1
-        with:
-          image: alpine:latest
-          run: apk update > /dev/null && apk add iproute2 > /dev/null && ip -4 route show default | cut -d' ' -f3      
 
       # test prerequisites
       # dotnet 6,7,8
@@ -47,7 +45,9 @@ jobs:
       - name: Dapr tool installer
         uses: dapr/setup-dapr@v1
       - name: Init Dapr  
-        run: dapr init      
+        run: |
+          dapr init      
+          dapr --version
 
       - name: Restore
         run: dotnet restore

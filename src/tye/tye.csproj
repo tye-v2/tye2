@@ -3,10 +3,15 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <RootNamespace>Microsoft.Tye</RootNamespace>
-    <AssemblyName>tye</AssemblyName>
-    <PackageId>Microsoft.Tye</PackageId>
-    <ToolCommandName>tye</ToolCommandName>
+    <AssemblyName>tye2</AssemblyName>
+    <ToolCommandName>tye2</ToolCommandName>
     <PackAsTool>true</PackAsTool>
+
+    <PackageId>tye2</PackageId>
+    <Authors>https://github.com/orgs/tye-v2/people</Authors>
+    <Company>tye2 team</Company>
+    <PackageDescription>Tye2 is a local orchestrator tool that makes developing and testing microservices and distributed applications easier.</PackageDescription>
+    <RepositoryUrl>https://github.com/tye-v2/tye2</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

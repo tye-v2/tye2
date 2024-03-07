@@ -186,10 +186,12 @@ namespace Microsoft.Tye.Hosting
                     services.AddOptions<StaticFileOptions>()
                             .PostConfigure(o =>
                             {
-                                var fileProvider = new ManifestEmbeddedFileProvider(typeof(TyeHost).Assembly, "wwwroot");
+                                var manifestEmbeddedFileProvider = new ManifestEmbeddedFileProvider(typeof(TyeHost).Assembly, "wwwroot");
 
                                 // Make sure we don't remove the existing file providers (blazor needs this)
-                                o.FileProvider = new CompositeFileProvider(o.FileProvider, fileProvider);
+                                o.FileProvider = o.FileProvider is null
+                                    ? manifestEmbeddedFileProvider
+                                    : new CompositeFileProvider(o.FileProvider, manifestEmbeddedFileProvider);
                             });
                     services.AddCors(
                             options =>

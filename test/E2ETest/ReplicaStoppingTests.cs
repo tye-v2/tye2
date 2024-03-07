@@ -74,6 +74,8 @@ namespace E2ETest
 
         [ConditionalFact]
         [SkipIfDockerNotRunning]
+        [Trait("FailsAfterNet8", "true")]
+        [Trait("FailsInGithubActions", "true")]
         public async Task MultiProjectDockerStoppingTests()
         {
             using var projectDirectory = CopyTestProjectDirectory("multi-project");
