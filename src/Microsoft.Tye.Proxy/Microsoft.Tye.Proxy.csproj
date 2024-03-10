@@ -5,7 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bedrock.Framework" Version="0.1.62-alpha.g8a965bbcba" />
     <PackageReference Include="System.IO.Pipelines" Version="8.0.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Tye.Bedrock\Microsoft.Tye.Bedrock.csproj" />
+  </ItemGroup>
+
+
 </Project>

@@ -6,7 +6,6 @@
   -->
   <ItemGroup>
     <FileSignInfo Include="AutoMapper.dll" CertificateName="3PartySHA2" />
-    <FileSignInfo Include="Bedrock.Framework.dll" CertificateName="3PartySHA2" />
     <FileSignInfo Include="Elasticsearch.Net.dll" CertificateName="3PartySHA2" />
     <FileSignInfo Include="FeatherHttp.dll" CertificateName="3PartySHA2" />
     <FileSignInfo Include="Fractions.dll" CertificateName="3PartySHA2" />

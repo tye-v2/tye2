@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="3.1.8" GeneratePathProperty="true" />
+    <PackageReference Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="3.1.9" GeneratePathProperty="true" />
     <PackageReference Include="Microsoft.Diagnostics.NETCore.Client" Version="0.2.510501" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.ApplicationInsights" Version="2.22.0" />
@@ -31,7 +31,7 @@
     <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
     <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="9.0.3" />
-    <PackageReference Include="Serilog.Sinks.Seq" Version="6.0.0" />
+    <PackageReference Include="Serilog.Sinks.Seq" Version="7.0.0" />
   </ItemGroup>
 
 </Project>
