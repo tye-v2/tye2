@@ -40,30 +40,28 @@ namespace Microsoft.Tye
                 path = new FileInfo(filePath!);
             }
 
-            var template = @"
-# tye application configuration file
-# read all about it at https://github.com/dotnet/tye
-#
-# when you've given us a try, we'd love to know what you think:
-#    https://aka.ms/AA7q20u
-#
-# define global settings here
-# name: exampleapp # application name
-# registry: exampleuser # dockerhub username or container registry hostname
+            var template = """
+                # tye application configuration file
+                # read all about it at https://github.com/tye-v2/tye2
+                #
+                # define global settings here
+                # name: exampleapp # application name
+                # registry: exampleuser # dockerhub username or container registry hostname
 
-# define multiple services here
-services:
-- name: myservice
-  # project: app.csproj # msbuild project path (relative to this file)
-  # executable: app.exe # path to an executable (relative to this file)
-  # args: --arg1=3 # arguments to pass to the process
-  # replicas: 5 # number of times to launch the application
-  # env: # array of environment variables
-  #  - name: key
-  #    value: value
-  # bindings: # optional array of bindings (ports, connection strings)
-    # - port: 8080 # number port of the binding
-".TrimStart();
+                # define multiple services here
+                services:
+                - name: myservice
+                  # project: app.csproj # msbuild project path (relative to this file)
+                  # executable: app.exe # path to an executable (relative to this file)
+                  # args: --arg1=3 # arguments to pass to the process
+                  # replicas: 5 # number of times to launch the application
+                  # env: # array of environment variables
+                  #  - name: key
+                  #    value: value
+                  # bindings: # optional array of bindings (ports, connection strings)
+                    # - port: 8080 # number port of the binding
+
+                """;
 
             // Output in the current directory unless an input file was provided, then
             // output next to the input file.
@@ -101,14 +99,12 @@ services:
                     outputFilePath = path.FullName;
                 }
 
-                template = @"
-# tye application configuration file
-# read all about it at https://github.com/dotnet/tye
-#
-# when you've given us a try, we'd love to know what you think:
-#    https://aka.ms/AA7q20u
-#
-".TrimStart() + serializer.Serialize(application);
+                template = """
+                    # tye application configuration file
+                    # read all about it at https://github.com/tye-v2/tye2
+                    #
+
+                    """ + serializer.Serialize(application);
             }
 
             return (template, outputFilePath);
