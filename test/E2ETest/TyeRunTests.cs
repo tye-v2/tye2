@@ -1443,6 +1443,9 @@ services:
             var outputContext = new OutputContext(_sink, Verbosity.Debug);
             var application = await ApplicationFactory.CreateAsync(outputContext, projectFile);
 
+            var zipkin = application.Services.First(x => x.Name == "zipkin");
+            var zipkinPort = zipkin.Bindings.First().Port!.Value;
+            
             var handler = new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
@@ -1451,7 +1454,7 @@ services:
 
             var client = new HttpClient(new RetryHandler(handler));
             
-            var options = new HostOptions() {  };
+            var options = new HostOptions() { DistributedTraceProvider = $"zipkin=http://localhost:{zipkinPort}"};
             
             await application.ProcessExtensionsAsync(options, outputContext, ExtensionContext.OperationKind.LocalRun);
             
@@ -1464,15 +1467,15 @@ services:
                 await client.GetAsync(frontendUri);
 
                 //wait for zipkin to consume traces
-                await Task.Delay(TimeSpan.FromSeconds(3));
+                await Task.Delay(TimeSpan.FromSeconds(5));
                 
-                var services = await GetZipkin().GetServices();
+                var services = await GetZipkin(zipkinPort).GetServices();
 
                 services.Should().HaveCount(2);
             });
         }
 
-        private IZipkinClient GetZipkin() => RestService.For<IZipkinClient>("http://localhost:9411/api/v2");
+        private IZipkinClient GetZipkin(int port) => RestService.For<IZipkinClient>($"http://localhost:{port}/api/v2");
 
         private async Task<string> GetServiceUrl(HttpClient client, Uri uri, string serviceName)
         {

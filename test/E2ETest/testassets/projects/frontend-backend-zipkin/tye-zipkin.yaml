@@ -8,3 +8,8 @@ services:
   project: backend/backend.csproj
 - name: frontend
   project: frontend/frontend.csproj
+- name: zipkin
+  image: openzipkin/zipkin
+  bindings:
+   - port: 9412
+     containerPort: 9411
