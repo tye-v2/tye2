@@ -21,9 +21,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.Tye;
+using Microsoft.Tye.E2ETests.Infrastructure;
 using Microsoft.Tye.Hosting;
 using Microsoft.Tye.Hosting.Model;
 using Microsoft.Tye.Hosting.Model.V1;
+using Refit;
 using Test.Infrastructure;
 using Xunit;
 using Xunit.Abstractions;
@@ -1431,6 +1433,46 @@ services:
                 Assert.Contains(new KeyValuePair<string, string>("ASPNETCORE_ENVIRONMENT", "dev"), dict);
             });
         }
+
+        [Fact]
+        public async Task RunFrontendBackendProjectWithZipkin()
+        {
+            using var projectDirectory = CopyTestProjectDirectory("frontend-backend-zipkin");
+
+            var projectFile = new FileInfo(Path.Combine(projectDirectory.DirectoryPath, "tye-zipkin.yaml"));
+            var outputContext = new OutputContext(_sink, Verbosity.Debug);
+            var application = await ApplicationFactory.CreateAsync(outputContext, projectFile);
+
+            var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
+            };
+
+            var client = new HttpClient(new RetryHandler(handler));
+            
+            var options = new HostOptions() {  };
+            
+            await application.ProcessExtensionsAsync(options, outputContext, ExtensionContext.OperationKind.LocalRun);
+            
+            await RunHostingApplication(application, options, async (app, uri) =>
+            {
+                var frontendUri = await GetServiceUrl(client, uri, "frontend");
+                var backendUri = await GetServiceUrl(client, uri, "backend");
+                
+                await client.GetAsync(backendUri);
+                await client.GetAsync(frontendUri);
+
+                //wait for zipkin to consume traces
+                await Task.Delay(TimeSpan.FromSeconds(3));
+                
+                var services = await GetZipkin().GetServices();
+
+                services.Should().HaveCount(2);
+            });
+        }
+
+        private IZipkinClient GetZipkin() => RestService.For<IZipkinClient>("http://localhost:9411/api/v2");
 
         private async Task<string> GetServiceUrl(HttpClient client, Uri uri, string serviceName)
         {
