@@ -17,8 +17,11 @@ namespace Microsoft.Tye
 {
     static partial class Program
     {
-        public static Task<int> Main(string[] args)
+        public static async Task<int> Main(string[] args)
         {
+            //Console.WriteLine("ta wersja");
+            //await Task.Delay(7000);
+            
             var command = new RootCommand()
             {
                 Description = "Developer tools and publishing for microservices.",
@@ -53,7 +56,7 @@ namespace Microsoft.Tye
             builder.UseMiddleware(DefaultOptionsMiddleware);
 
             var parser = builder.Build();
-            return parser.InvokeAsync(args);
+            return await parser.InvokeAsync(args);
         }
 
         private static void HandleException(Exception exception, InvocationContext context)

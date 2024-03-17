@@ -1463,12 +1463,15 @@ services:
                 var frontendUri = await GetServiceUrl(client, uri, "frontend");
                 var backendUri = await GetServiceUrl(client, uri, "backend");
                 
-                await client.GetAsync(backendUri);
+                //need to make it slower
+                await Task.Delay(TimeSpan.FromSeconds(2));
                 await client.GetAsync(frontendUri);
-
+                //need to make it slower
+                await Task.Delay(TimeSpan.FromSeconds(2));
+                await client.GetAsync(backendUri);
                 //wait for zipkin to consume traces
-                await Task.Delay(TimeSpan.FromSeconds(5));
-                
+                await Task.Delay(TimeSpan.FromSeconds(2));
+
                 var services = await GetZipkin(zipkinPort).GetServices();
 
                 services.Should().HaveCount(2);
