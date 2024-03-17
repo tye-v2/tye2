@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Tye2.Hosting.Model;
 using Tye2.Core;
+using Tye2.Hosting.Model;
 using Xunit;
 
-namespace Microsoft.Tye.UnitTests
+namespace Tye2.UnitTests
 {
     public class ServiceUnitTests
     {

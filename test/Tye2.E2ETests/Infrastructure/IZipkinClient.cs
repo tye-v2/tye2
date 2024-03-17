@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Refit;
 
-namespace Microsoft.Tye.E2ETests.Infrastructure;
+namespace Tye2.E2ETests.Infrastructure;
 
 public interface IZipkinClient
 {

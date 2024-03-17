@@ -6,7 +6,7 @@ using System;
 using System.Runtime.InteropServices;
 using Tye2.Core;
 
-namespace Test.Infrastructure
+namespace Tye2.Test.Infrastructure
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Assembly)]
     public class SkipIfDockerNotRunningAttribute : Attribute, ITestCondition

@@ -7,7 +7,7 @@ using System.Linq;
 using Tye2.Core.ConfigModel;
 using Xunit;
 
-namespace Test.Infrastructure
+namespace Tye2.Test.Infrastructure
 {
     public static class TyeAssert
     {

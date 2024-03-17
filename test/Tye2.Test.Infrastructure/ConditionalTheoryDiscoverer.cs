@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
-namespace Test.Infrastructure
+namespace Tye2.Test.Infrastructure
 {
     internal class ConditionalTheoryDiscoverer : TheoryDiscoverer
     {

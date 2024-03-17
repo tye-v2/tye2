@@ -6,9 +6,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Test.Infrastructure.xunit;
+using Tye2.Test.Infrastructure.xunit;
 
-namespace Test.Infrastructure
+namespace Tye2.Test.Infrastructure
 {
     /// <summary>
     /// Provides access to file storage for the running test. Get access by

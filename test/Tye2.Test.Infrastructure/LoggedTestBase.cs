@@ -10,10 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Test.Infrastructure.Logging;
+using Tye2.Test.Infrastructure.Logging;
 using Xunit.Abstractions;
 
-namespace Test.Infrastructure
+namespace Tye2.Test.Infrastructure
 {
     public class LoggedTestBase : ILoggedTest, ITestMethodLifecycle
     {

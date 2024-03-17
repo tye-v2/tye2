@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit.Sdk;
 
-namespace Test.Infrastructure.Logging
+namespace Tye2.Test.Infrastructure.Logging
 {
     public static class LogValuesAssert
     {

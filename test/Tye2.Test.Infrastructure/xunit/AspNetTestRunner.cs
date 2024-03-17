@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
-namespace Test.Infrastructure.xunit
+namespace Tye2.Test.Infrastructure.xunit
 {
     internal class AspNetTestRunner : XunitTestRunner
     {

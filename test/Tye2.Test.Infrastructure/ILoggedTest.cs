@@ -7,7 +7,7 @@ using System.Reflection;
 using Microsoft.Extensions.Logging;
 using Xunit.Abstractions;
 
-namespace Test.Infrastructure
+namespace Tye2.Test.Infrastructure
 {
     public interface ILoggedTest : IDisposable
     {

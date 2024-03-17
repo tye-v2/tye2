@@ -5,7 +5,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Test.Infrastructure
+namespace Tye2.Test.Infrastructure
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Assembly)]
     internal class SkipOnLinuxAttribute : Attribute, ITestCondition

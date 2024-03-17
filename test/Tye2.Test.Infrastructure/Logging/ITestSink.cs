@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Concurrent;
 
-namespace Test.Infrastructure.Logging
+namespace Tye2.Test.Infrastructure.Logging
 {
     public interface ITestSink
     {

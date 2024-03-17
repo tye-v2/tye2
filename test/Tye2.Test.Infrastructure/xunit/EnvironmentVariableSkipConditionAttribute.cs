@@ -4,7 +4,7 @@
 using System;
 using System.Linq;
 
-namespace Test.Infrastructure.xunit
+namespace Tye2.Test.Infrastructure.xunit
 {
     /// <summary>
     /// Skips a test when the value of an environment variable matches any of the supplied values.

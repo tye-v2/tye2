@@ -6,7 +6,7 @@ using System.Linq;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
-namespace Test.Infrastructure
+namespace Tye2.Test.Infrastructure
 {
     public static class TestMethodExtensions
     {

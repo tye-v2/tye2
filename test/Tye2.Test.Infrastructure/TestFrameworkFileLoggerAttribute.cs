@@ -5,7 +5,7 @@
 
 using System;
 
-namespace Test.Infrastructure
+namespace Tye2.Test.Infrastructure
 {
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false)]
     public class TestFrameworkFileLoggerAttribute : TestOutputDirectoryAttribute

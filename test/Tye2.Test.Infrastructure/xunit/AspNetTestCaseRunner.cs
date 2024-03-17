@@ -8,7 +8,7 @@ using System.Threading;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
-namespace Test.Infrastructure.xunit
+namespace Tye2.Test.Infrastructure.xunit
 {
     internal class AspNetTestCaseRunner : XunitTestCaseRunner
     {

@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Test.Infrastructure.xunit
+namespace Tye2.Test.Infrastructure.xunit
 {
     /// <summary>
     /// https://en.wikipedia.org/wiki/Windows_10_version_history

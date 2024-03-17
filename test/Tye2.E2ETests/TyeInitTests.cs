@@ -3,13 +3,12 @@
 // See the LICENSE file in the project root for more information.
 
 using System.IO;
-using Test.Infrastructure;
-using Tye2;
+using Tye2.Test.Infrastructure;
 using Xunit;
 using Xunit.Abstractions;
-using static Test.Infrastructure.TestHelpers;
+using static Tye2.Test.Infrastructure.TestHelpers;
 
-namespace Microsoft.Tye.E2ETests
+namespace Tye2.E2ETests
 {
     public class TyeInitTests
     {

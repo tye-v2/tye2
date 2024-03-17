@@ -20,19 +20,18 @@ using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Microsoft.Tye.E2ETests.Infrastructure;
 using Refit;
-using Test.Infrastructure;
-using Tye2;
 using Tye2.Core;
+using Tye2.E2ETests.Infrastructure;
 using Tye2.Hosting;
 using Tye2.Hosting.Model;
 using Tye2.Hosting.Model.V1;
+using Tye2.Test.Infrastructure;
 using Xunit;
 using Xunit.Abstractions;
-using static Test.Infrastructure.TestHelpers;
+using static Tye2.Test.Infrastructure.TestHelpers;
 
-namespace Microsoft.Tye.E2ETests
+namespace Tye2.E2ETests
 {
     public class TyeRunTests
     {

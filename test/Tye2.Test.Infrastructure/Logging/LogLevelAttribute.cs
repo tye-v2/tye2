@@ -5,7 +5,7 @@
 using System;
 using Microsoft.Extensions.Logging;
 
-namespace Test.Infrastructure.Logging
+namespace Tye2.Test.Infrastructure.Logging
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = false)]
     public class LogLevelAttribute : Attribute

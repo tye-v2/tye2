@@ -4,7 +4,7 @@
 using System;
 using Xunit.Sdk;
 
-namespace Test.Infrastructure.xunit
+namespace Tye2.Test.Infrastructure.xunit
 {
     /// <summary>
     /// Marks a test as "Quarantined" so that the build will sequester it and ignore failures.

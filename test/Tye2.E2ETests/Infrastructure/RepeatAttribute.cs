@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Xunit.Sdk;
 
-namespace Microsoft.Tye.E2ETests.Infrastructure;
+namespace Tye2.E2ETests.Infrastructure;
 
 public class RepeatAttribute : DataAttribute
 {

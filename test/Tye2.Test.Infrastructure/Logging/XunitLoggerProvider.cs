@@ -8,7 +8,7 @@ using System.Text;
 using Microsoft.Extensions.Logging;
 using Xunit.Abstractions;
 
-namespace Test.Infrastructure.Logging
+namespace Tye2.Test.Infrastructure.Logging
 {
     public class XunitLoggerProvider : ILoggerProvider
     {

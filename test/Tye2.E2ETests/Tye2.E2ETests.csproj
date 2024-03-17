@@ -1,9 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  
-  <PropertyGroup>
-    <RootNamespace>Microsoft.Tye.E2ETests</RootNamespace>
-  </PropertyGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="6.12.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0"/>

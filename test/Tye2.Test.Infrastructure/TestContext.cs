@@ -3,10 +3,10 @@
 
 using System;
 using System.Reflection;
-using Test.Infrastructure.xunit;
+using Tye2.Test.Infrastructure.xunit;
 using Xunit.Abstractions;
 
-namespace Test.Infrastructure
+namespace Tye2.Test.Infrastructure
 {
     /// <summary>
     /// Provides access to contextual information about the running tests. Get access by

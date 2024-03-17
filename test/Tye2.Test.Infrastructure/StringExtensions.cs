@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Test.Infrastructure
+namespace Tye2.Test.Infrastructure
 {
     public static class StringExtensions
     {

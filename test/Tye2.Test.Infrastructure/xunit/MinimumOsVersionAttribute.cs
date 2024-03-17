@@ -4,7 +4,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Test.Infrastructure.xunit
+namespace Tye2.Test.Infrastructure.xunit
 {
     /// <summary>
     /// Skips a test if the OS is the given type (Windows) and the OS version is less than specified.

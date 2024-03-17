@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 #if AspNetCoreTesting
 namespace Microsoft.AspNetCore.Testing
 #else
-namespace Microsoft.Tye.E2ETests
+namespace Tye2.E2ETests
 #endif
 {
 

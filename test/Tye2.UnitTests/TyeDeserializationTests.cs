@@ -1,16 +1,16 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using Test.Infrastructure;
 using Tye2.Core;
 using Tye2.Core.ConfigModel;
 using Tye2.Core.Serialization;
+using Tye2.Test.Infrastructure;
 using Xunit;
 using YamlDotNet.RepresentationModel;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace Microsoft.Tye.UnitTests
+namespace Tye2.UnitTests
 {
     public class TyeDeserializationTests
     {

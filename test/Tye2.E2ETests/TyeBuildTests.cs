@@ -4,13 +4,12 @@
 
 using System.IO;
 using System.Threading.Tasks;
-using Test.Infrastructure;
-using Tye2;
 using Tye2.Core;
+using Tye2.Test.Infrastructure;
 using Xunit.Abstractions;
-using static Test.Infrastructure.TestHelpers;
+using static Tye2.Test.Infrastructure.TestHelpers;
 
-namespace Microsoft.Tye.E2ETests
+namespace Tye2.E2ETests
 {
     public partial class TyeBuildTests
     {

@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Test.Infrastructure.xunit
+namespace Tye2.Test.Infrastructure.xunit
 {
     /// <summary>
     /// Skip test if running on CI

@@ -5,7 +5,7 @@
 using System;
 using Microsoft.Extensions.Logging;
 
-namespace Test.Infrastructure.Logging
+namespace Tye2.Test.Infrastructure.Logging
 {
     public class WriteContext
     {

@@ -7,7 +7,7 @@ using System.Linq;
 using Tye2.Core.Serialization;
 using YamlDotNet.RepresentationModel;
 
-namespace Test.Infrastructure
+namespace Tye2.Test.Infrastructure
 {
     public class EqualityYamlNodeVisitor
     {

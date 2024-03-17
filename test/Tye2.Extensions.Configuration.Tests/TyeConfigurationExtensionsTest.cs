@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Xunit;
 
-namespace Microsoft.Tye.Extensions.Configuration.Tests
+namespace Tye2.Extensions.Configuration.Tests
 {
     public class TyeConfigurationExtensionsTest
     {

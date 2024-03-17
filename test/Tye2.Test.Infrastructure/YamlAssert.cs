@@ -4,7 +4,7 @@ using Xunit;
 using Xunit.Abstractions;
 using YamlDotNet.RepresentationModel;
 
-namespace Test.Infrastructure
+namespace Tye2.Test.Infrastructure
 {
     public static class YamlAssert
     {

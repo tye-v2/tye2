@@ -4,10 +4,10 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Reflection;
-using Test.Infrastructure.Logging;
+using Tye2.Test.Infrastructure.Logging;
 using Xunit.Abstractions;
 
-namespace Test.Infrastructure
+namespace Tye2.Test.Infrastructure
 {
     public class LoggedTest : LoggedTestBase
     {

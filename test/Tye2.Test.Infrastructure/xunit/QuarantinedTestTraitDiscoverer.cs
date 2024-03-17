@@ -7,7 +7,7 @@ using Xunit.Abstractions;
 using Xunit.Sdk;
 
 // Do not change this namespace without changing the usage in QuarantinedTestAttribute
-namespace Test.Infrastructure.xunit
+namespace Tye2.Test.Infrastructure.xunit
 {
     public class QuarantinedTestTraitDiscoverer : ITraitDiscoverer
     {

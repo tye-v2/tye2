@@ -5,10 +5,9 @@ using System.CommandLine.Invocation;
 using System.CommandLine.IO;
 using System.CommandLine.Parsing;
 using System.Linq;
-using Tye2;
 using Xunit;
 
-namespace Microsoft.Tye.UnitTests
+namespace Tye2.UnitTests
 {
     public class DefaultOptionsMiddlewareTests
     {

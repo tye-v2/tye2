@@ -7,7 +7,7 @@ using Xunit.Abstractions;
 using Xunit.Sdk;
 
 // Do not change this namespace without changing the usage in ConditionalTheoryAttribute
-namespace Test.Infrastructure.xunit
+namespace Tye2.Test.Infrastructure.xunit
 {
     internal class ConditionalTheoryDiscoverer : TheoryDiscoverer
     {

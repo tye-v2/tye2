@@ -1,12 +1,12 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Test.Infrastructure;
 using Tye2.Core;
+using Tye2.Test.Infrastructure;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Microsoft.Tye.E2ETests
+namespace Tye2.E2ETests
 {
     public class ApplicationFactoryTests
     {

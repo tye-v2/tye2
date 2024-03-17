@@ -4,7 +4,7 @@
 using System;
 using System.Linq;
 
-namespace Test.Infrastructure.xunit
+namespace Tye2.Test.Infrastructure.xunit
 {
     /// <summary>
     /// Skip test if running on helix (or a particular helix queue).

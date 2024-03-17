@@ -4,7 +4,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Test.Infrastructure.xunit
+namespace Tye2.Test.Infrastructure.xunit
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = true)]
     public class OSSkipConditionAttribute : Attribute, ITestCondition

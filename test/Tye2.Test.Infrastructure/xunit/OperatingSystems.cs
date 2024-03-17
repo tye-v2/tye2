@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Test.Infrastructure.xunit
+namespace Tye2.Test.Infrastructure.xunit
 {
     [Flags]
     public enum OperatingSystems

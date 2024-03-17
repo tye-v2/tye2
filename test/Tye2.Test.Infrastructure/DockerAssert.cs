@@ -6,11 +6,11 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tye2.Core;
 using Xunit.Abstractions;
 using Xunit.Sdk;
-using Tye2.Core;
 
-namespace Test.Infrastructure
+namespace Tye2.Test.Infrastructure
 {
     public static class DockerAssert
     {

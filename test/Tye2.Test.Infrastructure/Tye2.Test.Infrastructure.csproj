@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <IsTestProject>false</IsTestProject>
-    <RootNamespace>Test.Infrastructure</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

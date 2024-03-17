@@ -1,7 +1,7 @@
 ﻿using Tye2.Hosting.Ansi2Html;
 using Xunit;
 
-namespace Microsoft.Tye.UnitTests;
+namespace Tye2.UnitTests;
 
 public class Ansi2HtmlConverterTests
 {

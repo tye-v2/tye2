@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 
-namespace Test.Infrastructure.xunit
+namespace Tye2.Test.Infrastructure.xunit
 {
     [AttributeUsage(AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public sealed class DockerOnlyAttribute : Attribute, ITestCondition

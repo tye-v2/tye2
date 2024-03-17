@@ -3,7 +3,7 @@ using Tye2.Core;
 using Tye2.Core.Serialization;
 using Xunit;
 
-namespace Microsoft.Tye.UnitTests
+namespace Tye2.UnitTests
 {
     public class TyeDeserializationValidationTests
     {

@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Test.Infrastructure
+namespace Tye2.Test.Infrastructure
 {
     /// <summary>
     /// Used to specify that <see cref="TestFileOutputContext.TestClassName"/> should used the

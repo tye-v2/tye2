@@ -5,7 +5,7 @@ using System;
 using Xunit;
 using Xunit.Sdk;
 
-namespace Test.Infrastructure.xunit
+namespace Tye2.Test.Infrastructure.xunit
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     [XunitTestCaseDiscoverer("Microsoft.AspNetCore.Testing." + nameof(ConditionalTheoryDiscoverer), "Microsoft.AspNetCore.Testing")]

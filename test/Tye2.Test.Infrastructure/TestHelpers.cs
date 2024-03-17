@@ -14,7 +14,7 @@ using Tye2.Hosting;
 using Tye2.Hosting.Model;
 using Xunit;
 
-namespace Test.Infrastructure
+namespace Tye2.Test.Infrastructure
 {
     public static class TestHelpers
     {

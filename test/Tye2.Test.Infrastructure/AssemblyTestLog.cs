@@ -15,11 +15,11 @@ using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 using Serilog.Extensions.Logging;
-using Test.Infrastructure.Logging;
+using Tye2.Test.Infrastructure.Logging;
 using Xunit.Abstractions;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
-namespace Test.Infrastructure
+namespace Tye2.Test.Infrastructure
 {
     public class AssemblyTestLog : IDisposable
     {

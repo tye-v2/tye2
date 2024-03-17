@@ -5,9 +5,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Test.Infrastructure.xunit;
+using Tye2.Test.Infrastructure.xunit;
 
-namespace Test.Infrastructure
+namespace Tye2.Test.Infrastructure
 {
     /// <summary>
     /// Defines a lifecycle for attributes or classes that want to know about tests starting
