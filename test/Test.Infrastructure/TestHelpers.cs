@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Tye.Hosting;
@@ -231,7 +230,8 @@ namespace Test.Infrastructure
         {
             if (services == null)
             {
-                await DoOperationAndWaitForReplicasToChangeState(host, desiredState, host.Application.Services.Sum(s => s.Value.Description.Replicas), null, null, TimeSpan.Zero, h => h.StartAsync());
+                await DoOperationAndWaitForReplicasToChangeState(host, desiredState, 
+                    host.Application.Services.Where(x=>x.Value.ServiceType != ServiceType.External).Sum(s => s.Value.Description.Replicas), null, null, TimeSpan.Zero, h => h.StartAsync());
             }
             else
             {

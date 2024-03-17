@@ -39,8 +39,7 @@ namespace Microsoft.Tye.Hosting.Diagnostics
 
             source.Dynamic.All += traceEvent =>
             {
-
-                if (traceEvent.EventName == "Activity1Start/Start")
+                if (traceEvent.EventName == "Activity1/Start" && traceEvent.OpcodeName == "Start")
                 {
                     var listenerEventName = (string)traceEvent.PayloadByName("EventName");
 
@@ -96,8 +95,7 @@ namespace Microsoft.Tye.Hosting.Diagnostics
                         }
                     }
                 }
-
-                if (traceEvent.EventName == "Activity1Stop/Stop")
+                if (traceEvent.EventName == "Activity1/Stop" && traceEvent.OpcodeName == "Stop" )
                 {
                     var listenerEventName = (string)traceEvent.PayloadByName("EventName");
 
@@ -142,7 +140,7 @@ namespace Microsoft.Tye.Hosting.Diagnostics
                         }
                     }
                 }
-                if (traceEvent.EventName == "Activity2Start/Start")
+                if (traceEvent.EventName == "Activity2/Start" &&traceEvent.OpcodeName == "Start" )
                 {
                     var listenerEventName = (string)traceEvent.PayloadByName("EventName");
 
@@ -178,7 +176,7 @@ namespace Microsoft.Tye.Hosting.Diagnostics
                         }
                     }
                 }
-                if (traceEvent.EventName == "Activity2Stop/Stop")
+                if (traceEvent.EventName == "Activity2/Stop"  &&traceEvent.OpcodeName == "Stop")
                 {
                     var listenerEventName = (string)traceEvent.PayloadByName("EventName");
 

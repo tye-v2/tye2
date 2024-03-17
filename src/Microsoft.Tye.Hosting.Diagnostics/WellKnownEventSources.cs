@@ -20,48 +20,48 @@ namespace Microsoft.Tye.Hosting.Diagnostics
         public static readonly string TplEventSource = "System.Threading.Tasks.TplEventSource";
 
         // This is the list of events for distributed tracing
-        public static readonly string DiagnosticFilterString = "\"" +
-          "Microsoft.AspNetCore/Microsoft.AspNetCore.Hosting.HttpRequestIn.Start@Activity1Start:-" +
-            "Request.Scheme" +
-            ";Request.Host" +
-            ";Request.PathBase" +
-            ";Request.QueryString" +
-            ";Request.Path" +
-            ";Request.Method" +
-            ";ActivityStartTime=*Activity.StartTimeUtc.Ticks" +
-            ";ActivityParentId=*Activity.ParentId" +
-            ";ActivityId=*Activity.Id" +
-            ";ActivitySpanId=*Activity.SpanId" +
-            ";ActivityTraceId=*Activity.TraceId" +
-            ";ActivityParentSpanId=*Activity.ParentSpanId" +
-            ";ActivityIdFormat=*Activity.IdFormat" +
-          "\r\n" +
-        "Microsoft.AspNetCore/Microsoft.AspNetCore.Hosting.HttpRequestIn.Stop@Activity1Stop:-" +
-            "Response.StatusCode" +
-            ";ActivityDuration=*Activity.Duration.Ticks" +
-            ";ActivityId=*Activity.Id" +
-        "\r\n" +
-        "HttpHandlerDiagnosticListener/System.Net.Http.HttpRequestOut@Event:-" +
-        "\r\n" +
-        "HttpHandlerDiagnosticListener/System.Net.Http.HttpRequestOut.Start@Activity2Start:-" +
-            "Request.RequestUri" +
-            ";Request.Method" +
-            ";Request.RequestUri.Host" +
-            ";Request.RequestUri.Port" +
-            ";ActivityStartTime=*Activity.StartTimeUtc.Ticks" +
-            ";ActivityId=*Activity.Id" +
-            ";ActivitySpanId=*Activity.SpanId" +
-            ";ActivityTraceId=*Activity.TraceId" +
-            ";ActivityParentSpanId=*Activity.ParentSpanId" +
-            ";ActivityIdFormat=*Activity.IdFormat" +
-            ";ActivityId=*Activity.Id" +
-         "\r\n" +
-        "HttpHandlerDiagnosticListener/System.Net.Http.HttpRequestOut.Stop@Activity2Stop:-" +
-            ";ActivityDuration=*Activity.Duration.Ticks" +
-            ";ActivityId=*Activity.Id" +
-        "\r\n" +
-
-        "\"";
+        public const string DiagnosticFilterString =
+                "Microsoft.AspNetCore/Microsoft.AspNetCore.Hosting.HttpRequestIn.Start@Activity1Start:-" +
+                    "Request.Scheme" +
+                    ";Request.Host" +
+                    ";Request.PathBase" +
+                    ";Request.QueryString" +
+                    ";Request.Path" +
+                    ";Request.Method" +
+                    ";ActivityStartTime=*Activity.StartTimeUtc.Ticks" +
+                    ";ActivityParentId=*Activity.ParentId" +
+                    ";ActivityId=*Activity.Id" +
+                    ";ActivitySpanId=*Activity.SpanId" +
+                    ";ActivityTraceId=*Activity.TraceId" +
+                    ";ActivityParentSpanId=*Activity.ParentSpanId" +
+                    ";ActivityIdFormat=*Activity.IdFormat" +
+                "\r\n" +
+                "Microsoft.AspNetCore/Microsoft.AspNetCore.Hosting.HttpRequestIn.Stop@Activity1Stop:-" +
+                    "ActivityId=*Activity.Id" +
+                    ";Request.Path" +
+                    ";Response.StatusCode" +
+                    ";ActivityDuration=*Activity.Duration.Ticks" +
+                "\r\n" +
+                "HttpHandlerDiagnosticListener/System.Net.Http.HttpRequestOut@Event:-" +
+                "\r\n" +
+                "HttpHandlerDiagnosticListener/System.Net.Http.HttpRequestOut.Start@Activity2Start:-" +
+                    "Request.RequestUri" +
+                    ";Request.Method" +
+                    ";Request.RequestUri.Host" +
+                    ";Request.RequestUri.Port" +
+                    ";ActivityStartTime=*Activity.StartTimeUtc.Ticks" +
+                    ";ActivityId=*Activity.Id" +
+                    ";ActivitySpanId=*Activity.SpanId" +
+                    ";ActivityTraceId=*Activity.TraceId" +
+                    ";ActivityParentSpanId=*Activity.ParentSpanId" +
+                    ";ActivityIdFormat=*Activity.IdFormat" +
+                    ";ActivityId=*Activity.Id" +
+                    "\r\n" +
+                "HttpHandlerDiagnosticListener/System.Net.Http.HttpRequestOut.Stop@Activity2Stop:-" +
+                    ";ActivityDuration=*Activity.Duration.Ticks" +
+                    ";ActivityId=*Activity.Id" +
+                "\r\n";
+    
 
         public static List<EventPipeProvider> CreateDefaultProviders()
         {
