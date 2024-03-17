@@ -42,7 +42,7 @@ namespace Microsoft.Tye
 
             var template = """
                 # tye2 application configuration file
-                # read all about it at https://github.com/tye-v2/tye2
+                # read all about it at https://www.tye2.org/
                 #
                 # define global settings here
                 # name: exampleapp # application name
@@ -101,7 +101,7 @@ namespace Microsoft.Tye
 
                 template = """
                     # tye2 application configuration file
-                    # read all about it at https://github.com/tye-v2/tye2
+                    # read all about it at https://www.tye2.org/
                     #
 
                     """ + serializer.Serialize(application);
