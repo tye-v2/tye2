@@ -41,7 +41,7 @@ namespace Microsoft.Tye
             }
 
             var template = """
-                # tye application configuration file
+                # tye2 application configuration file
                 # read all about it at https://github.com/tye-v2/tye2
                 #
                 # define global settings here
@@ -100,7 +100,7 @@ namespace Microsoft.Tye
                 }
 
                 template = """
-                    # tye application configuration file
+                    # tye2 application configuration file
                     # read all about it at https://github.com/tye-v2/tye2
                     #
 
