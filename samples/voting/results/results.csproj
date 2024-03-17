@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(TyeLibrariesPath)\Microsoft.Tye.Extensions.Configuration\Microsoft.Tye.Extensions.Configuration.csproj" />
+    <ProjectReference Include="$(TyeLibrariesPath)\Tye2.Extensions.Configuration\Tye2.Extensions.Configuration.csproj" />
   </ItemGroup>
 
 </Project>

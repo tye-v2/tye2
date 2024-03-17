@@ -1,5 +1,3 @@
-# tye application configuration file
-# read all about it at https://github.com/dotnet/tye
 name: frontend-backend
 extensions:
   - name: zipkin

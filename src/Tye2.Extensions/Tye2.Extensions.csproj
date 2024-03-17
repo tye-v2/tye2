@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Tye2.Core\Tye2.Core.csproj" />
+  </ItemGroup>
+
+</Project>

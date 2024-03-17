@@ -5,6 +5,7 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Tye2.Core;
 
 namespace Microsoft.Tye
 {
