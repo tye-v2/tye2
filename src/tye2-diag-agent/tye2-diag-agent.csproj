@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>Tye2.DiagAgent</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tye2.Extensions.Configuration\Tye2.Extensions.Configuration.csproj" />
+    <ProjectReference Include="..\Tye2.Hosting.Diagnostics\Tye2.Hosting.Diagnostics.csproj" />
+  </ItemGroup>
+</Project>

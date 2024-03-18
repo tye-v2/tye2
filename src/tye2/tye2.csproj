@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Tye2</RootNamespace>
+    <AssemblyName>tye2</AssemblyName>
+    <ToolCommandName>tye2</ToolCommandName>
+    <PackAsTool>true</PackAsTool>
+
+    <PackageId>tye2</PackageId>
+    <Authors>https://github.com/orgs/tye-v2/people</Authors>
+    <Company>tye2 team</Company>
+    <PackageDescription>Tye2 is a local orchestrator tool that makes developing and testing microservices and distributed applications easier.</PackageDescription>
+    <RepositoryUrl>https://github.com/tye-v2/tye2</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="ProjectEvaluation.targets" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\shared\KubectlDetector.cs" Link="KubectlDetector.cs" />
+    <Compile Include="..\shared\TempFile.cs" Link="TempFile.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tye2.Hosting\Tye2.Hosting.csproj" />
+    <ProjectReference Include="..\Tye2.Core\Tye2.Core.csproj" />
+    <ProjectReference Include="..\Tye2.Extensions\Tye2.Extensions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.20104.2" />
+    <PackageReference Include="YamlDotNet" Version="15.1.2" />
+  </ItemGroup>
+
+</Project>

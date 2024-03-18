@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "tye2": {
+      "commandName": "Project",
+      "commandLineArgs": "run",
+      "workingDirectory": "..\\..\\..\\..\\..\\samples\\frontend-backend\\"
+    }
+  }
+}
