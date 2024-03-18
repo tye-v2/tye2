@@ -11,12 +11,12 @@ using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Bedrock.Framework;
 using Microsoft.AspNetCore.Connections;
 using Microsoft.AspNetCore.Connections.Features;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Tye.Hosting.Model;
+using Microsoft.Tye.Proxy;
 
 namespace Microsoft.Tye.Hosting
 {

@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Infrastructure", "test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tye-diag-agent", "src\tye-diag-agent\tye-diag-agent.csproj", "{7173D2B6-B102-4DCA-8000-5DAE684BFC13}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Tye.Bedrock", "src\Microsoft.Tye.Bedrock\Microsoft.Tye.Bedrock.csproj", "{D6295A90-FA37-4657-AF82-86A42AF23092}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -199,6 +201,18 @@ Global
 		{7173D2B6-B102-4DCA-8000-5DAE684BFC13}.Release|x64.Build.0 = Release|Any CPU
 		{7173D2B6-B102-4DCA-8000-5DAE684BFC13}.Release|x86.ActiveCfg = Release|Any CPU
 		{7173D2B6-B102-4DCA-8000-5DAE684BFC13}.Release|x86.Build.0 = Release|Any CPU
+		{D6295A90-FA37-4657-AF82-86A42AF23092}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6295A90-FA37-4657-AF82-86A42AF23092}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6295A90-FA37-4657-AF82-86A42AF23092}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D6295A90-FA37-4657-AF82-86A42AF23092}.Debug|x64.Build.0 = Debug|Any CPU
+		{D6295A90-FA37-4657-AF82-86A42AF23092}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D6295A90-FA37-4657-AF82-86A42AF23092}.Debug|x86.Build.0 = Debug|Any CPU
+		{D6295A90-FA37-4657-AF82-86A42AF23092}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6295A90-FA37-4657-AF82-86A42AF23092}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6295A90-FA37-4657-AF82-86A42AF23092}.Release|x64.ActiveCfg = Release|Any CPU
+		{D6295A90-FA37-4657-AF82-86A42AF23092}.Release|x64.Build.0 = Release|Any CPU
+		{D6295A90-FA37-4657-AF82-86A42AF23092}.Release|x86.ActiveCfg = Release|Any CPU
+		{D6295A90-FA37-4657-AF82-86A42AF23092}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -217,6 +231,7 @@ Global
 		{FCE7C889-16D1-42E7-A514-EA096E9D41A7} = {F19B02EB-A372-417A-B2C2-EA0D5A3C76D5}
 		{F9A7C801-26F3-4D20-B084-2A6A6343E869} = {F19B02EB-A372-417A-B2C2-EA0D5A3C76D5}
 		{7173D2B6-B102-4DCA-8000-5DAE684BFC13} = {8C662D59-A3CB-466F-8E85-A8E6BA5E7601}
+		{D6295A90-FA37-4657-AF82-86A42AF23092} = {8C662D59-A3CB-466F-8E85-A8E6BA5E7601}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D8002603-BB27-4500-BF86-274A8E72D302}
