@@ -1,7 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
 #nullable disable
 
 using System;
@@ -66,7 +65,8 @@ namespace Tye2.E2ETests
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -111,7 +111,8 @@ services:
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -139,12 +140,12 @@ services:
             var projectFile = new FileInfo(Path.Combine(projectDirectory.DirectoryPath, "tye.yaml"));
             var outputContext = new OutputContext(_sink, Verbosity.Debug);
             var application = await ApplicationFactory.CreateAsync(outputContext, projectFile);
-
-            await application.ProcessExtensionsAsync(new HostOptions(), outputContext,
-                ExtensionContext.OperationKind.LocalRun);
+            
+            await application.ProcessExtensionsAsync(new HostOptions(), outputContext, ExtensionContext.OperationKind.LocalRun);
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -153,14 +154,14 @@ services:
             {
                 //The backend calls the Function app via Dapr InvokeMethod. So test that that func has a sidecar, and being proxied.
                 var backendUri = await GetServiceUrl(client, uri, "dapr-test-project");
-
+                
                 //Wait for the services to start
                 await Task.Delay(10000);
-
+                
                 var backendResponse = await client.GetAsync(backendUri);
-
+                
                 Assert.True(backendResponse.IsSuccessStatusCode);
-
+                
                 var responseContent = await backendResponse.Content.ReadAsStringAsync();
                 responseContent.Should().Contain("Welcome to Azure Functions!");
             });
@@ -180,7 +181,8 @@ services:
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -215,7 +217,8 @@ services:
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -245,14 +248,14 @@ services:
         {
             using var projectDirectory = CopyTestProjectDirectory("frontend-backend");
 
-            var projectFile = new FileInfo(Path.Combine(projectDirectory.DirectoryPath,
-                $"tye-{buildConfiguration.ToLower()}-configuration.yaml"));
+            var projectFile = new FileInfo(Path.Combine(projectDirectory.DirectoryPath, $"tye-{buildConfiguration.ToLower()}-configuration.yaml"));
             var outputContext = new OutputContext(_sink, Verbosity.Debug);
             var application = await ApplicationFactory.CreateAsync(outputContext, projectFile);
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -271,13 +274,9 @@ services:
                 Assert.True(backendResponse.IsSuccessStatusCode);
                 Assert.True(frontendResponse.IsSuccessStatusCode);
 
-                Assert.True(app.Services.All(s =>
-                    s.Value.Description.RunInfo != null &&
-                    ((DockerRunInfo)s.Value.Description.RunInfo).VolumeMappings.Count > 0));
+                Assert.True(app.Services.All(s => s.Value.Description.RunInfo != null && ((DockerRunInfo)s.Value.Description.RunInfo).VolumeMappings.Count > 0));
 
-                var outputFileInfos = app.Services.Select(s =>
-                    new FileInfo((s.Value?.Description?.RunInfo as DockerRunInfo)?.VolumeMappings[0].Source ??
-                                 throw new InvalidOperationException())).ToList();
+                var outputFileInfos = app.Services.Select(s => new FileInfo((s.Value?.Description?.RunInfo as DockerRunInfo)?.VolumeMappings[0].Source ?? throw new InvalidOperationException())).ToList();
 
                 Assert.True(outputFileInfos.All(f => f.Directory?.Parent?.Parent?.Name == buildConfiguration));
             });
@@ -298,8 +297,7 @@ services:
             application.Services.Remove(project);
 
             var outputFileName = project.AssemblyName + ".dll";
-            var container = new ContainerServiceBuilder(project.Name,
-                $"mcr.microsoft.com/dotnet/aspnet:{project.TargetFrameworkVersion}", ServiceSource.Configuration)
+            var container = new ContainerServiceBuilder(project.Name, $"mcr.microsoft.com/dotnet/aspnet:{project.TargetFrameworkVersion}", ServiceSource.Configuration)
             {
                 IsAspNet = true
             };
@@ -307,13 +305,13 @@ services:
             container.Args = $"dotnet /app/{outputFileName} {project.Args}";
             container.Bindings.AddRange(project.Bindings.Where(b => b.Protocol != "https"));
 
-            await ProcessUtil.RunAsync("dotnet", $"publish \"{project.ProjectFile.FullName}\"  /nologo",
-                outputDataReceived: _sink.WriteLine, errorDataReceived: _sink.WriteLine);
+            await ProcessUtil.RunAsync("dotnet", $"publish \"{project.ProjectFile.FullName}\"  /nologo", outputDataReceived: _sink.WriteLine, errorDataReceived: _sink.WriteLine);
             application.Services.Add(container);
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -347,8 +345,7 @@ services:
             application.Services.Remove(project);
 
             var outputFileName = project.AssemblyName + ".dll";
-            var container = new ContainerServiceBuilder(project.Name,
-                $"mcr.microsoft.com/dotnet/aspnet:{project.TargetFrameworkVersion}", ServiceSource.Configuration)
+            var container = new ContainerServiceBuilder(project.Name, $"mcr.microsoft.com/dotnet/aspnet:{project.TargetFrameworkVersion}", ServiceSource.Configuration)
             {
                 IsAspNet = true
             };
@@ -358,13 +355,13 @@ services:
             // We're not setting up the dev cert here
             container.Bindings.AddRange(project.Bindings.Where(b => b.Protocol != "https"));
 
-            await ProcessUtil.RunAsync("dotnet", $"publish \"{project.ProjectFile.FullName}\"  /nologo",
-                outputDataReceived: _sink.WriteLine, errorDataReceived: _sink.WriteLine);
+            await ProcessUtil.RunAsync("dotnet", $"publish \"{project.ProjectFile.FullName}\"  /nologo", outputDataReceived: _sink.WriteLine, errorDataReceived: _sink.WriteLine);
             application.Services.Add(container);
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -393,7 +390,8 @@ services:
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -419,6 +417,7 @@ services:
                 const int retries = 10;
                 for (var i = 0; i < retries; i++)
                 {
+
                     var logs = await client.GetStringAsync(new Uri(uri, $"/api/v1/logs/frontend"));
 
                     // "Application Started" should be logged twice due to the file change
@@ -445,7 +444,8 @@ services:
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -468,6 +468,7 @@ services:
                 const int retries = 10;
                 for (var i = 0; i < retries; i++)
                 {
+
                     var logs = await client.GetStringAsync(new Uri(uri, $"/api/v1/logs/web-app"));
 
                     // "Application Started" should be logged twice due to the file change
@@ -526,7 +527,8 @@ services:
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -579,7 +581,8 @@ services:
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -633,7 +636,8 @@ services:
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -682,14 +686,17 @@ services:
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
-            await File.WriteAllTextAsync(Path.Combine(tempDir.DirectoryPath, "file.txt"),
-                "This content came from the host");
+            await File.WriteAllTextAsync(Path.Combine(tempDir.DirectoryPath, "file.txt"), "This content came from the host");
 
             var client = new HttpClient(new RetryHandler(handler));
-            var options = new HostOptions() { Docker = true, };
+            var options = new HostOptions()
+            {
+                Docker = true,
+            };
 
             await RunHostingApplication(application, options, async (app, serviceApi) =>
             {
@@ -713,7 +720,8 @@ services:
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -793,7 +801,8 @@ services:
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -825,7 +834,8 @@ services:
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = true
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = true
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -881,19 +891,16 @@ services:
         private static IEnumerable<IPAddress> GetLiveIPAddresses(AddressFamily? family = null)
         {
             return from ni in NetworkInterface.GetAllNetworkInterfaces()
-                where ni.OperationalStatus == OperationalStatus.Up
-                let prop = ni.GetIPProperties()
-                from unicast in prop.UnicastAddresses
-                let addr = unicast.Address
-                where addr != IPAddress.IPv6Loopback && (family == null || addr.AddressFamily == family)
-                select addr;
+                   where ni.OperationalStatus == OperationalStatus.Up
+                   let prop = ni.GetIPProperties()
+                   from unicast in prop.UnicastAddresses
+                   let addr = unicast.Address
+                   where addr != IPAddress.IPv6Loopback && (family == null || addr.AddressFamily == family)
+                   select addr;
         }
 
-        private Task TestIngressIP(string ipSetting, params IPAddress[] mustAnswer) =>
-            TestIngressIP(ipSetting, mustAnswer, Enumerable.Empty<IPAddress>());
-
-        private async Task TestIngressIP(string ipSetting, IEnumerable<IPAddress> mustAnswer,
-            IEnumerable<IPAddress> mustFail)
+        private Task TestIngressIP(string ipSetting, params IPAddress[] mustAnswer) => TestIngressIP(ipSetting, mustAnswer, Enumerable.Empty<IPAddress>());
+        private async Task TestIngressIP(string ipSetting, IEnumerable<IPAddress> mustAnswer, IEnumerable<IPAddress> mustFail)
         {
 #if !DEBUG
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -904,14 +911,14 @@ services:
 
             using var projectDirectory = CopyTestProjectDirectory("apps-with-ingress");
             var projectFile = new FileInfo(Path.Combine(projectDirectory.DirectoryPath, "tye-ip_test.yaml"));
-            File.WriteAllText(projectFile.FullName,
-                File.ReadAllText(projectFile.FullName).Replace("__TEST_IP_STRING__", ipSetting));
+            File.WriteAllText(projectFile.FullName, File.ReadAllText(projectFile.FullName).Replace("__TEST_IP_STRING__", ipSetting));
             var outputContext = new OutputContext(_sink, Verbosity.Debug);
             var application = await ApplicationFactory.CreateAsync(outputContext, projectFile);
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = true
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = true
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -923,7 +930,10 @@ services:
                     try
                     {
                         var ingressUri = await GetServiceUrl(client, uri, "ingress");
-                        var reqUri = new UriBuilder(ingressUri + "/index.html") { Host = ip.ToString() };
+                        var reqUri = new UriBuilder(ingressUri + "/index.html")
+                        {
+                            Host = ip.ToString()
+                        };
 
                         var htmlRequest = new HttpRequestMessage(HttpMethod.Get, reqUri.Uri);
                         htmlRequest.Headers.Host = "ui.example.com";
@@ -959,7 +969,8 @@ services:
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -996,7 +1007,10 @@ services:
             // Debug targets can be null if not specified, so make sure calling host.Start does not throw.
             var outputContext = new OutputContext(_sink, Verbosity.Debug);
             var application = await ApplicationFactory.CreateAsync(outputContext, projectFile);
-            await using var host = new TyeHost(application.ToHostingApplication(), new HostOptions()) { Sink = _sink, };
+            await using var host = new TyeHost(application.ToHostingApplication(), new HostOptions())
+            {
+                Sink = _sink,
+            };
 
             await host.StartAsync();
         }
@@ -1015,7 +1029,8 @@ services:
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -1061,7 +1076,8 @@ services:
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -1101,7 +1117,8 @@ services:
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -1128,7 +1145,8 @@ services:
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -1152,8 +1170,7 @@ services:
         {
             using var projectDirectory = CopyTestProjectDirectory("dockerfile");
 
-            File.Move(Path.Combine(projectDirectory.DirectoryPath, "backend", "Dockerfile"),
-                Path.Combine(projectDirectory.DirectoryPath, "Dockerfile"));
+            File.Move(Path.Combine(projectDirectory.DirectoryPath, "backend", "Dockerfile"), Path.Combine(projectDirectory.DirectoryPath, "Dockerfile"));
 
             var content = @"
 name: frontend-backend
@@ -1182,7 +1199,8 @@ services:
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -1215,7 +1233,8 @@ services:
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -1245,7 +1264,8 @@ services:
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -1275,7 +1295,8 @@ services:
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -1309,7 +1330,8 @@ services:
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -1338,8 +1360,7 @@ services:
         [SkipIfDockerNotRunning]
         [InlineData("non-standard-dashboard-port", "mcr.microsoft.com/dotnet/aspnet:8.0", 8005)]
         [InlineData("non-standard-dashboard-port-7.0", "mcr.microsoft.com/dotnet/aspnet:7.0", 8006)]
-        public async Task RunCliPortOverridesYamlDashboardPort(string projectName, string baseImage,
-            int tyeYamlDashboardPort)
+        public async Task RunCliPortOverridesYamlDashboardPort(string projectName, string baseImage, int tyeYamlDashboardPort)
         {
             var cliDashboardPort = 8008;
 
@@ -1353,31 +1374,31 @@ services:
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
 
-            await RunHostingApplication(application, new HostOptions() { Docker = true, Port = cliDashboardPort },
-                async (app, uri) =>
-                {
-                    // Make sure the dashboard is running on the expected port passed from the CLI, not the value from tye.yaml
-                    Assert.Equal(cliDashboardPort, uri.Port);
-                    Assert.NotEqual(tyeYamlDashboardPort, uri.Port);
+            await RunHostingApplication(application, new HostOptions() { Docker = true, Port = cliDashboardPort }, async (app, uri) =>
+            {
+                // Make sure the dashboard is running on the expected port passed from the CLI, not the value from tye.yaml
+                Assert.Equal(cliDashboardPort, uri.Port);
+                Assert.NotEqual(tyeYamlDashboardPort, uri.Port);
 
-                    // Make sure we're running containers
-                    Assert.True(app.Services.All(s => s.Value.Description.RunInfo is DockerRunInfo));
+                // Make sure we're running containers
+                Assert.True(app.Services.All(s => s.Value.Description.RunInfo is DockerRunInfo));
 
-                    // Ensure correct image used
-                    var dockerRunInfo = app.Services.Single().Value.Description.RunInfo as DockerRunInfo;
-                    Assert.Equal(baseImage, dockerRunInfo?.Image);
+                // Ensure correct image used
+                var dockerRunInfo = app.Services.Single().Value.Description.RunInfo as DockerRunInfo;
+                Assert.Equal(baseImage, dockerRunInfo?.Image);
 
-                    // Ensure app runs
-                    var testProjectUri = await GetServiceUrl(client, uri, "test-project");
-                    var response = await client.GetAsync(testProjectUri);
+                // Ensure app runs
+                var testProjectUri = await GetServiceUrl(client, uri, "test-project");
+                var response = await client.GetAsync(testProjectUri);
 
-                    Assert.True(response.IsSuccessStatusCode);
-                });
+                Assert.True(response.IsSuccessStatusCode);
+            });
         }
 
         [ConditionalFact]
@@ -1392,7 +1413,8 @@ services:
 
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
@@ -1418,59 +1440,39 @@ services:
             using var projectDirectory = CopyTestProjectDirectory("frontend-backend-zipkin");
 
             var projectFile = new FileInfo(Path.Combine(projectDirectory.DirectoryPath, "tye-zipkin.yaml"));
-            var outputContext = new OutputContext(_sink, Verbosity.Quiet);
+            var outputContext = new OutputContext(_sink, Verbosity.Debug);
             var application = await ApplicationFactory.CreateAsync(outputContext, projectFile);
 
             var zipkin = application.Services.First(x => x.Name == "zipkin");
             var zipkinPort = zipkin.Bindings.First().Port!.Value;
-
+            
             var handler = new HttpClientHandler
             {
-                ServerCertificateCustomValidationCallback = (a, b, c, d) => true, AllowAutoRedirect = false
+                ServerCertificateCustomValidationCallback = (a, b, c, d) => true,
+                AllowAutoRedirect = false
             };
 
             var client = new HttpClient(new RetryHandler(handler));
-
-            var options = new HostOptions() { DistributedTraceProvider = $"zipkin=http://localhost:{zipkinPort}" };
-
+            
+            var options = new HostOptions() { DistributedTraceProvider = $"zipkin=http://localhost:{zipkinPort}"};
+            
             await application.ProcessExtensionsAsync(options, outputContext, ExtensionContext.OperationKind.LocalRun);
-
+            
             await RunHostingApplication(application, options, async (app, uri) =>
             {
                 var frontendUri = await GetServiceUrl(client, uri, "frontend");
-
+                var backendUri = await GetServiceUrl(client, uri, "backend");
+                
                 //need to make it slower
                 await Task.Delay(TimeSpan.FromSeconds(2));
                 await client.GetAsync(frontendUri);
-
+                //need to make it slower
+                await Task.Delay(TimeSpan.FromSeconds(2));
+                await client.GetAsync(backendUri);
                 //wait for zipkin to consume traces
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
-                var zipkinClient = GetZipkin(zipkinPort);
-                var services = await zipkinClient.GetServices();
-                var traces = await zipkinClient.GetTraces("frontend");
-
-                traces.Count.Should().Be(1);
-
-                var internalTraces = traces.First();
-
-                var serverFrontendTrace =
-                    internalTraces.FirstOrDefault(x => x.Kind == "SERVER" && x.LocalEndpoint.ServiceName == "frontend");
-
-                serverFrontendTrace.Should().NotBeNull();
-
-                var clientFrontendTrace =
-                    internalTraces.FirstOrDefault(x => x.Kind == "CLIENT" && x.LocalEndpoint.ServiceName == "frontend");
-
-                clientFrontendTrace.Should().NotBeNull();
-
-                var serverBackendTrace =
-                    internalTraces.FirstOrDefault(x => x.Kind == "SERVER" && x.LocalEndpoint.ServiceName == "backend");
-
-                serverBackendTrace.Should().NotBeNull();
-
-                serverBackendTrace.ParentId.Should().Be(clientFrontendTrace.Id);
-                clientFrontendTrace.ParentId.Should().Be(serverFrontendTrace.Id);
+                var services = await GetZipkin(zipkinPort).GetServices();
 
                 services.Should().HaveCount(2);
             });
@@ -1486,8 +1488,7 @@ services:
             return $"{binding.Protocol ?? "http"}://localhost:{binding.Port}";
         }
 
-        private async Task RunHostingApplication(ApplicationBuilder application, HostOptions options,
-            Func<Application, Uri, Task> execute)
+        private async Task RunHostingApplication(ApplicationBuilder application, HostOptions options, Func<Application, Uri, Task> execute)
         {
             await using var host = new TyeHost(application.ToHostingApplication(), options);
             host.Sink = _sink;
@@ -1515,8 +1516,7 @@ services:
                         _output.WriteLine($"Logs for service: {s.Description.Name}");
                         _output.WriteLine(logs);
 
-                        var description =
-                            await client.GetStringAsync(new Uri(uri, $"/api/v1/services/{s.Description.Name}"));
+                        var description = await client.GetStringAsync(new Uri(uri, $"/api/v1/services/{s.Description.Name}"));
 
                         _output.WriteLine($"Service definition: {s.Description.Name}");
                         _output.WriteLine(description);
