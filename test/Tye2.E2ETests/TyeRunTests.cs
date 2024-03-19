@@ -1474,7 +1474,7 @@ services:
                 
                 var zipkinClient = GetZipkin(zipkinPort);
                 var services = await zipkinClient.GetServices();
-                services.Count.Should().Be(1);
+                services.Count.Should().Be(2);
                 var traces = await zipkinClient.GetTraces("frontend");
                 traces.Count.Should().Be(1);
                 var internalTraces = traces.First();
