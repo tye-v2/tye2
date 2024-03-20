@@ -1471,10 +1471,24 @@ services:
                 await client.GetAsync(backendUri);
                 //wait for zipkin to consume traces
                 await Task.Delay(TimeSpan.FromSeconds(2));
-
-                var services = await GetZipkin(zipkinPort).GetServices();
-
-                services.Should().HaveCount(2);
+                
+                var zipkinClient = GetZipkin(zipkinPort);
+                var services = await zipkinClient.GetServices();
+                services.Count.Should().Be(2);
+                var traces = await zipkinClient.GetTraces("frontend");
+                traces.Count.Should().Be(1);
+                var internalTraces = traces.First();
+                var serverFrontendTrace =
+                    internalTraces.FirstOrDefault(x => x.Kind == "SERVER" && x.LocalEndpoint.ServiceName == "frontend");
+                serverFrontendTrace.Should().NotBeNull();
+                var clientFrontendTrace =
+                    internalTraces.FirstOrDefault(x => x.Kind == "CLIENT" && x.LocalEndpoint.ServiceName == "frontend");
+                clientFrontendTrace.Should().NotBeNull();
+                var serverBackendTrace =
+                    internalTraces.FirstOrDefault(x => x.Kind == "SERVER" && x.LocalEndpoint.ServiceName == "backend");
+                serverBackendTrace.Should().NotBeNull();
+                serverBackendTrace.ParentId.Should().Be(clientFrontendTrace.Id);
+                clientFrontendTrace.ParentId.Should().Be(serverFrontendTrace.Id);
             });
         }
 
